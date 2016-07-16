@@ -5,9 +5,14 @@ require('./style.css');
 var Home = require('./views/home.js')
 // TODO: use routes to render pages
 var Site = React.createClass({
+  getInitialState: function(){
+    return {
+      polls: [1, 2, 3, 4, 5]
+    }
+  },
   render: function(){
     return (
-      <Home />
+      <Home polls={this.state.polls}/>
     )
   }
 })
