@@ -2,7 +2,9 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 require('./style.css');
 
-var Home = require('./views/home.js')
+var Navbar = require('./views/Navbar.js')
+var Home = require('./views/Home.js')
+
 // TODO: use routes to render pages
 var Site = React.createClass({
   getInitialState: function(){
@@ -12,10 +14,13 @@ var Site = React.createClass({
   },
   render: function(){
     return (
-      <Home polls={this.state.polls}/>
+      <div>
+        <Navbar homeNav={"active"}/>
+        <Home polls={this.state.polls}/>
+      </div>
     )
   }
-})
+});
 
 ReactDOM.render(
   <Site />,
