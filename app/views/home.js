@@ -1,4 +1,6 @@
 var React = require('react');
+var Link = require('react-router').Link;
+
 require('../style.css')
 var divStyle = {
     padding: "40px 15px",
@@ -20,7 +22,7 @@ var Home = React.createClass({
           {/* TODO: Add polls */}
           <ul>
           {this.props.polls.map(function(poll){
-            return <Poll poll={poll}/>
+            return <PollList poll={poll} key={poll}/>
           })}
           </ul>
         </div>
@@ -29,10 +31,10 @@ var Home = React.createClass({
   }
 });
 
-var Poll = React.createClass({
+var PollList = React.createClass({
   render: function(){
     return (
-      <li className="list-group-item" style={textStyle}>{this.props.poll}</li>
+      <li className="list-group-item" style={textStyle}><Link to={`/poll/${this.props.poll}`}>{this.props.poll}</Link></li>
     )
   }
 });
