@@ -8,7 +8,7 @@ var textStyle = {
 var PollList = React.createClass({
   render: function(){
     return (
-      <Link className="list-group-item" style={textStyle} to={`/poll/${this.props.poll}`}>{this.props.poll}</Link>
+      <Link className="list-group-item" style={textStyle} to={`/poll/${this.props.title}`}>{this.props.title}</Link>
     )
   }
 });

@@ -8,8 +8,7 @@ textStyle = {
   textAlign: "center"
 },
 btnStyle = {
-  marginBottom: "40px",
-  float: "right"
+  marginTop: "25px"
 };
 
 var NewPoll = React.createClass({
@@ -18,10 +17,20 @@ var NewPoll = React.createClass({
       <div>
         <div>
           <div className="container">
-            <div style={divStyle}>
-              <h1>Create a New Poll!</h1>
+            <div>
+              <h1 style={divStyle}>Create a New Poll!</h1>
+              <form>
+                <fieldset className="form-group">
+                <label>Title</label>
+                <input type="text" className="form-control" placeholder="Enter title"/>
+              </fieldset>
+              <fieldset className="form-group">
+                <label>Options</label>
+                <textarea className="form-control" rows="3" placeholder="Options seperated by commas"></textarea>
+              </fieldset>
+              <button className="btn btn-info" style={btnStyle} type="submit">Create!</button>
+              </form>
             </div>
-            <button className="btn btn-default">Create!</button>
           </div>
         </div>
       </div>

@@ -12,7 +12,36 @@ var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 var Redirect = require('react-router').Redirect;
 
-var polls = [1, 2, 3, 4, 5];
+var polls = [
+  {
+    title: "Food",
+    options: [
+      {
+        apples: 3
+      },
+      {
+        pears: 4
+      },
+      {
+        oranges: 2
+      }
+    ]
+  },
+  {
+    title: "Places",
+    options: [
+      {
+        newYork: 4
+      },
+      {
+        Florida: 2
+      },
+      {
+        Paris: 0
+      }
+    ]
+  }
+];
 
 var PollListPage = React.createClass({
   render: function() {
@@ -41,7 +70,7 @@ var PollPage = React.createClass({
     return (
       <div>
         <Navbar pollNav={"active"}/>
-        <Poll id={this.props.params.id}/>
+        <Poll polls={polls} params={this.props.params.id}/>
       </div>
     )
   }

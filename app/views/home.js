@@ -3,6 +3,7 @@ var Link = require('react-router').Link;
 var Navbar = require('./Navbar.js')
 var PollList = require('./PollList.js');
 require('../style.css')
+var count = 0;
 var divStyle = {
     padding: "40px 15px",
     textAlign: "center"
@@ -28,7 +29,7 @@ var Home = React.createClass({
           {/* TODO: Add polls */}
           <div className="list-group">
           {this.props.polls.map(function(poll){
-            return <PollList poll={poll} key={poll}/>
+            return <PollList title={poll.title} key={count++}/>
           })}
           </div>
         </div>
