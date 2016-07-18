@@ -6,8 +6,7 @@ var Poll = React.createClass({
   render: function() {
     return (
       <div>
-        <Navbar pollNav={"active"}/>
-        <h1>{this.props.params.id}</h1>
+        <h1>{this.props.id}</h1>
       </div>
     )
   }

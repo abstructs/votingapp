@@ -4,38 +4,71 @@ require('./style.css');
 
 var Navbar = require('./views/Navbar.js');
 var Home = require('./views/Home.js');
-var Poll = require('./views/Poll.js')
+var Poll = require('./views/Poll.js');
+var SignIn = require('./views/SignIn.js');
+var NewPoll = require('./views/NewPoll.js');
 
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
+var Redirect = require('react-router').Redirect;
 
-// TODO: use routes to render pages
-var Site = React.createClass({
-  getInitialState: function(){
-    return {
-      polls: [1, 2, 3, 4, 5]
-    }
-  },
-  render: function(){
+var polls = [1, 2, 3, 4, 5];
+
+var PollListPage = React.createClass({
+  render: function() {
     return (
       <div>
-        <Navbar homeNav={"active"}/>
-        <Home polls={this.state.polls}/>
+        <Navbar pollNav={"active"}/>
+        <Home polls={polls}/>
       </div>
     )
   }
 });
 
-// module.exports = Site;
+var SignInPage = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <Navbar signNav={"active"}/>
+        <SignIn />
+      </div>
+    )
+  }
+});
+
+var PollPage = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <Navbar pollNav={"active"}/>
+        <Poll id={this.props.params.id}/>
+      </div>
+    )
+  }
+});
+
+var CreatePollPage = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <Navbar pollNav={"active"}/>
+        <NewPoll />
+      </div>
+    )
+  }
+});
 
 ReactDOM.render(
   <Router>
-      <Route path="/" component={Site}>
+    <Redirect from="/" to="/polls" />
+      <Route path="/polls" component={PollListPage}>
       </Route>
-      <Route path="/polls" component={Poll}>
+      <Route path="/poll/:id" component={PollPage}>
       </Route>
-      <Route path="/poll/:id" component={Poll}>
+      <Route path="/signin" component={SignInPage}>
+      </Route>
+      <Route path="/new" component={CreatePollPage}>
       </Route>
     </Router>,
   document.getElementById('app')
-)
+);
