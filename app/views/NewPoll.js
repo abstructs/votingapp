@@ -18,8 +18,25 @@ var NewPoll = React.createClass({
       options: ""
     }
   },
-  handleChange: function() {
-    console.log(this.target.e)
+  handleTitleChange: function(e) {
+    this.setState({
+      title: e.target.value
+    });
+  },
+  handleOptionsChange: function(e) {
+    this.setState({
+      options: e.target.value
+    });
+    console.log(this.state.options)
+  },
+  handleSubmit: function() {
+    var data = {
+      title: this.state.title,
+      options: this.state.options.split("\n")
+    }
+    if (data.title && data.options.length > 1) {
+      $.post('http://localhost:8000/api', data);
+    }
   },
   render: function() {
     return (
@@ -31,13 +48,13 @@ var NewPoll = React.createClass({
               <form>
                 <fieldset className="form-group">
                 <label>Title</label>
-                <input type="text" className="form-control" placeholder="Enter title"/>
+                <input type="text" className="form-control" placeholder="Enter title" onChange={this.handleTitleChange} value={this.state.title}/>
               </fieldset>
               <fieldset className="form-group">
                 <label>Options</label>
-                <textarea className="form-control" rows="3" placeholder="Options seperated by commas"></textarea>
+                <textarea className="form-control" rows="3" placeholder="Options seperated by line breaks" onChange={this.handleOptionsChange}></textarea>
               </fieldset>
-              <button className="btn btn-info" style={btnStyle} type="submit">Create!</button>
+              <button className="btn btn-info" style={btnStyle} type="submit" onClick={this.handleSubmit}>Create!</button>
               </form>
             </div>
           </div>
