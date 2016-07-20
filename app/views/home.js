@@ -2,7 +2,8 @@ var React = require('react');
 var Link = require('react-router').Link;
 var Navbar = require('./Navbar.js')
 var PollList = require('./PollList.js');
-require('../style.css')
+var $ = require('jQuery');
+require('../style.css');
 var count = 0;
 var divStyle = {
     padding: "40px 15px",
@@ -17,6 +18,11 @@ btnStyle = {
 };
 
 var Home = React.createClass({
+  componentDidMount: function() {
+    $.get('http://localhost:8000/api', function (result) {
+      console.log(result);
+    }.bind(this));
+  },
   render: function() {
     return (
       <div>
