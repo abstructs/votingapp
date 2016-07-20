@@ -12,6 +12,15 @@ btnStyle = {
 };
 
 var NewPoll = React.createClass({
+  getInitialState: function() {
+    return {
+      title: "",
+      options: ""
+    }
+  },
+  handleChange: function() {
+    console.log(this.target.e)
+  },
   render: function() {
     return (
       <div>
