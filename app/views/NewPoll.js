@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react'),
+    $ = require('jquery');
 
 var divStyle = {
     padding: "40px 15px",
@@ -27,7 +28,6 @@ var NewPoll = React.createClass({
     this.setState({
       options: e.target.value
     });
-    console.log(this.state.options)
   },
   handleSubmit: function() {
     var data = {
@@ -35,7 +35,7 @@ var NewPoll = React.createClass({
       options: this.state.options.split("\n")
     }
     if (data.title && data.options.length > 1) {
-      $.post('http://localhost:8000/api', data);
+      $.post('http://localhost:8000/api', data, function(res) { console.log(res) });
     }
   },
   render: function() {
