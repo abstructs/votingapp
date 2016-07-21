@@ -1,5 +1,7 @@
 var React = require('react'),
-    $ = require('jquery');
+    $ = require('jquery'),
+    hashHistory = require('react-router').hashHistory;
+
 
 var divStyle = {
     padding: "40px 15px",
@@ -36,6 +38,7 @@ var NewPoll = React.createClass({
     }
     if (data.title && data.options.length > 1) {
       $.post('http://localhost:8000/api', data, function(res) { console.log(res) });
+      hashHistory.push('/polls')
     }
   },
   render: function() {
