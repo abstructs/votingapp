@@ -13,9 +13,8 @@ app.get('/api', cors(), function(req, res) {
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     var collection = db.collection('polls');
-
     collection.find().toArray(function(err, poll){
-      res.json({Type: poll})
+      res.json({Polls: poll});
     });
     db.close();
   });
@@ -25,9 +24,8 @@ app.post('/api', cors(), function(req, res){
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     var collection = db.collection('polls');
-    collection.insert({"Random": "Stuff"});
 
-    // collection.insert({ title: req.body.title, options: req.body.options });
+    collection.insert({ title: req.body.title, options: req.body.options });
 
     res.json({Type: "POST"});
     db.close();

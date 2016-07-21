@@ -11,6 +11,7 @@ var NewPoll = require('./views/NewPoll.js');
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 var Redirect = require('react-router').Redirect;
+var hashHistory = require('react-router').hashHistory;
 
 var polls = [
   {
@@ -93,7 +94,7 @@ var CreatePollPage = React.createClass({
 });
 
 ReactDOM.render(
-  <Router>
+  <Router history={hashHistory}>
     <Redirect from="/" to="/polls" />
       <Route path="/polls" component={PollListPage}>
       </Route>

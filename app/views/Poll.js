@@ -30,6 +30,7 @@ var RenderOptions = React.createClass({
             <span className="caret"></span>
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li>Hello</li>
           </ul>
         </div>
       </div>

@@ -4,7 +4,6 @@ var Navbar = require('./Navbar.js')
 var PollList = require('./PollList.js');
 var $ = require('jQuery');
 require('../style.css');
-var count = 0;
 var divStyle = {
     padding: "40px 15px",
     textAlign: "center"
@@ -18,10 +17,17 @@ btnStyle = {
 };
 
 var Home = React.createClass({
+  getInitialState: function() {
+    return {
+      pollData: {}
+    }
+  },
   componentDidMount: function() {
-    $.get('http://localhost:8000/api', function (result) {
-      console.log(result);
-    }.bind(this));
+    this.serverRequest = $.get('http://localhost:8000/api', function(polls){
+      this.setState({
+        pollData: polls
+      })
+    }.bind(this))
   },
   render: function() {
     return (
@@ -32,11 +38,10 @@ var Home = React.createClass({
             <h1>Free Code Camp Voting</h1>
             <p className="lead"> Below are polls! {"\n"} Select a poll to see the results and vote, or sign-in to make a new poll.</p>
           </div>
-          {/* TODO: Add polls */}
           <div className="list-group">
-          {this.props.polls.map(function(poll){
-            return <PollList title={poll.title} key={count++}/>
-          })}
+
+          <PollList pollData={this.state.pollData} />
+
           </div>
         </div>
       </div>
