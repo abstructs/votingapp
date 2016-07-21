@@ -23,9 +23,27 @@ app.post('/api', cors(), function(req, res){
     assert.equal(null, err);
 
     res.json({Type: "POST"});
-    console.log(req.body)
     db.close();
   });
 });
+
+app.put('/api', cors(), function(req, res){
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+
+    res.json({Type: "POST"});
+    db.close();
+  });
+});
+
+app.delete('/api', cors(), function(req, res){
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+
+    res.json({Type: "POST"});
+    db.close();
+  });
+});
+
 
 app.listen(8000, function(){console.log("Server is running on port 8000...")});
