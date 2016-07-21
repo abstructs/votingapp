@@ -12,14 +12,11 @@ app.use(bodyParser.json());
 app.get('/api', cors(), function(req, res) {
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
-    var collection = db.collection('polls'),
-    pollArr = [];
-    var polls = collection.find().toArray(function(err, poll){
-      return poll
+    var collection = db.collection('polls');
+
+    collection.find().toArray(function(err, poll){
+      res.json({Type: poll})
     });
-    console.log(polls)
-    
-    res.json({pollArr});
     db.close();
   });
 });
