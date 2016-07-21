@@ -13,48 +13,12 @@ var Route = require('react-router').Route;
 var Redirect = require('react-router').Redirect;
 var hashHistory = require('react-router').hashHistory;
 
-var polls = [
-  {
-    title: "Food",
-    options: [
-      {
-        apples: 3
-      },
-      {
-        pears: 4
-      },
-      {
-        oranges: 2
-      }
-    ]
-  },
-  {
-    title: "Places",
-    options: [
-      {
-        newYork: 4
-      },
-      {
-        Florida: 2
-      },
-      {
-        Paris: 0
-      }
-    ]
-  }
-];
-
 var PollListPage = React.createClass({
-  getInitialState: function() {
-    return {
-      polls: polls
-    }
-  },
   render: function() {
     return (
       <div>
         <Navbar pollNav={"active"}/>
-        <Home polls={polls}/>
+        <Home />
       </div>
     )
   }
@@ -76,7 +40,7 @@ var PollPage = React.createClass({
     return (
       <div>
         <Navbar pollNav={"active"}/>
-        <Poll polls={polls} params={this.props.params.id}/>
+        <Poll params={this.props.params.id}/>
       </div>
     )
   }

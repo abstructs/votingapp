@@ -38,7 +38,7 @@ var NewPoll = React.createClass({
     }
     if (data.title && data.options.length > 1) {
       $.post('http://localhost:8000/api', data, function(res) { console.log(res) });
-      hashHistory.push('/polls')
+      hashHistory.push('/polls');
     }
   },
   render: function() {
