@@ -2,8 +2,19 @@ var React = require('react');
 var Navbar = require('./Navbar.js')
 require('../style.css');
 var titleStyle = {
-  marginTop: '50px'
+  textAlign: "left",
+  marginBottom: "15px"
 },
+dropStyle = {
+  marginTop: "10px",
+  height: "40px",
+  width: "200px"
+},
+btnStyle = {
+  marginTop: "10px",
+  height: "40px",
+  width: "200px"
+}
 count = 0;
 var Poll = React.createClass({
   getInitialState: function(){
@@ -21,10 +32,10 @@ var Poll = React.createClass({
   render: function() {
     return (
       <div>
-        <div>
+        <div className="jumbotron">
           <div className="container">
             <div>
-              <p style={titleStyle}>{this.props.params}</p>
+              <h3 style={titleStyle}>{this.props.params}</h3>
             </div>
             <RenderOptions poll={this.state.pollData} key={count++} />
           </div>
@@ -40,19 +51,15 @@ var RenderOptions = React.createClass({
       return (
         <div>
           {this.props.title}
-          <div className="dropdown">
-            <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              All Options
-              <span className="caret"></span>
-            </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-              {this.props.poll.Poll.options.map(function(obj){
-                for (var key in obj) {
-                  return <li><a href="#">{key}</a></li>
-                }
-              })}
-            </ul>
-          </div>
+          <p>I would like to vote...</p>
+          <select className="form-control" style={dropStyle}>
+            {this.props.poll.Poll.options.map(function(obj){
+              for (var key in obj) {
+                return <option>{key}</option>
+              }
+            })}
+          </select>
+          <button className="btn btn-success" type="submit" style={btnStyle}>Submit</button>
         </div>
       )
     }
