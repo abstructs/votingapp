@@ -47,7 +47,7 @@ var NewPoll = React.createClass({
         <div>
           <div className="container">
             <div>
-              <h1 style={divStyle}>Create a New Poll</h1>
+            <h1 style={divStyle}>Create a New Poll</h1>
               <form>
                 <fieldset className="form-group">
                 <label>Title</label>

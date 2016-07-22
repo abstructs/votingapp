@@ -1,15 +1,27 @@
 var React = require('react');
 var Navbar = require('./Navbar.js')
 require('../style.css');
-
+var titleStyle = {
+  marginTop: '50px'
+}
 var Poll = React.createClass({
+  getInitialState: function(){
+    return {
+      pollData: {}
+    }
+  },
+  componentDidMount: function() {
+    $.get('http://localhost:8000/onepoll/' + this.props.params, function(polls){
+      console.log(polls)
+    })
+  },
   render: function() {
     return (
       <div>
         <div>
           <div className="container">
             <div>
-              <h1>{this.props.params}</h1>
+              <p style={titleStyle}>{this.props.params}</p>
             </div>
             <RenderOptions options={this.props.polls} />
           </div>
@@ -26,7 +38,7 @@ var RenderOptions = React.createClass({
         {this.props.title}
         <div className="dropdown">
           <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Vote:
+            All Options
             <span className="caret"></span>
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">

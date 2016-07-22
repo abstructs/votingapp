@@ -9,12 +9,24 @@ var MongoClient = require('mongodb').MongoClient,
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.get('/api', cors(), function(req, res) {
+app.get('/allpolls', cors(), function(req, res) {
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     var collection = db.collection('polls');
     collection.find().toArray(function(err, poll){
       res.json({Polls: poll});
+    });
+    db.close();
+  });
+});
+
+app.get('/onepoll/:id', cors(), function(req, res) {
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    var collection = db.collection('polls');
+    collection.findOne({title: req.params.id}).then(function(p){
+      console.log(p)
+      res.json({Poll: p});
     });
     db.close();
   });
