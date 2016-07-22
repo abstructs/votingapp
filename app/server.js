@@ -38,8 +38,8 @@ app.post('/api', cors(), function(req, res){
     var collection = db.collection('polls');
 
     collection.insert({ title: req.body.title, options: req.body.options });
-
-    res.json({Type: "POST"});
+    console.log("Successfully inserted: " + req.body.options)
+    res.json({Success: true});
     db.close();
   });
 });

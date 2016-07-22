@@ -32,10 +32,18 @@ var NewPoll = React.createClass({
     });
   },
   handleSubmit: function() {
+    var allOptions = [];
+    this.state.options.split("\n").map(function(option){
+      var newObj = {};
+      newObj[option] = 0;
+      allOptions.push(newObj)
+    });
+
     var data = {
       title: this.state.title,
-      options: this.state.options.split("\n")
+      options: allOptions
     }
+    console.log(data)
     if (data.title && data.options.length > 1) {
       $.post('http://localhost:8000/api', data, function(res) { console.log(res) });
       hashHistory.push('/polls');
