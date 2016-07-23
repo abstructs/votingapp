@@ -14,7 +14,7 @@ divStyle = {
 var SignIn = React.createClass({
   render: function(){
     return (
-      <div>
+      <div className="container">
         <h1 style={divStyle}>Sign In</h1>
         <form>
           <fieldset className="form-group">
