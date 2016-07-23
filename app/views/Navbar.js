@@ -14,7 +14,7 @@ var Navbar = React.createClass({
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand" href="#">Voting App</a>
+              <a className="navbar-brand" href="#">Voticon</a>
             </div>
             <div id="navbar" className="collapse navbar-collapse">
               <ul className="nav navbar-nav">

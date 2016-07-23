@@ -13,7 +13,8 @@ textStyle = {
 },
 btnStyle = {
   marginBottom: "40px",
-  float: "right"
+  position: "absolute",
+  left: "80%"
 };
 
 var Home = React.createClass({
@@ -35,13 +36,11 @@ var Home = React.createClass({
         <div className="container">
           <div style={divStyle}>
             <Link className="btn btn-success" style={btnStyle} to={`/new`}>Create New Poll</Link>
-            <h1>Free Code Camp Voting</h1>
-            <p className="lead"> Below are polls! {"\n"} Select a poll to see the results and vote, or sign-in to make a new poll.</p>
+            <h1>Voticon!</h1>
+            <p className="lead"> Make your vote known... <br></br> Select a poll to from below to view results and vote, or sign-in to make a new poll.</p>
           </div>
           <div className="list-group">
-
-          <PollList pollData={this.state.pollData} />
-
+            <PollList pollData={this.state.pollData} />
           </div>
         </div>
       </div>

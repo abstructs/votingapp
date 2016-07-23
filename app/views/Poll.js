@@ -16,9 +16,10 @@ btnStyle = {
   height: "40px",
   width: "200px"
 },
+optionsStyle = {
+  paddingLeft: "60px"
+}
 chartStyle = {
-  width: "500px",
-  height: "500px"
 };
 var Poll = React.createClass({
   getInitialState: function(){
@@ -39,11 +40,13 @@ var Poll = React.createClass({
       <div>
         <div className="jumbotron">
           <div className="container">
-            <div>
+            <div className="col-sm-6" style={optionsStyle}>
               <h2 style={titleStyle}>{this.props.params}</h2>
+              <RenderOptions poll={this.state.pollData} />
             </div>
-            <RenderOptions poll={this.state.pollData} />
-            <RenderResults poll={this.state.pollData} />
+            <div className="col-sm-4">
+              <RenderResults poll={this.state.pollData} />
+            </div>
           </div>
         </div>
       </div>
@@ -90,16 +93,20 @@ var RenderResults = React.createClass({
   componentDidUpdate: function() {
     if (this.props.poll.Poll !== undefined) {
       $(function(){
+        var pollData = {
+          values: [],
+          labels: []
+        };
+        {this.props.poll.Poll.options.map(function(obj){
+          pollData.labels.push(obj.optionName);
+          pollData.values.push(obj.value);
+        })}
         var ctx = $('#myChart').get(0).getContext("2d"),
         data = {
-          labels: [
-            "Red",
-            "Blue",
-            "Yellow"
-          ],
+          labels: pollData.labels,
           datasets: [
             {
-              data: [300, 50, 100],
+              data: pollData.values,
               backgroundColor: [
                 "#FF6384",
                 "#36A2EB",
@@ -122,7 +129,7 @@ var RenderResults = React.createClass({
           options: options
         })
         return true;
-      });
+      }.bind(this));
     }
     else {
       return false;
