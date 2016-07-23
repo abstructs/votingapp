@@ -35,8 +35,14 @@ app.post('/addpoll', cors(), function(req, res){
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     var collection = db.collection('polls');
+    var title = req.body.title;
+    var options = req.body.options;
 
-    collection.insert({ title: req.body.title, options: req.body.options });
+    options.map(function(o){
+      o.value = parseInt(o.value);
+    })
+
+    collection.insert({ title: req.body.title, options: options });
     console.log("Successfully inserted: " + req.body.options)
     res.json({Success: true});
     db.close();
@@ -45,17 +51,13 @@ app.post('/addpoll', cors(), function(req, res){
 
 app.post('/addvote/:id', cors(), function(req, res){
   MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
+    if (err) throw err;
     var collection = db.collection('polls');
 
-    // collection.update({title: req.params.id},
-    // { $set:
-    //     {
-    //       options: {}
-    //     }
-    //   }
-    // )
-    console.log(req.body.votedFor);
+    collection.update(
+    {"options.optionName": req.body.vote },
+    { $inc: { "options.$.value": 1 }});
+
     res.json({Success: true});
     db.close();
   });
