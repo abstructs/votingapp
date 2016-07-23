@@ -33,10 +33,10 @@ var NewPoll = React.createClass({
   },
   handleSubmit: function() {
     var allOptions = [];
+    var count = 0;
     this.state.options.split("\n").map(function(option){
-      var newObj = {};
-      newObj[option] = 0;
-      allOptions.push(newObj)
+      var newObj = { optionName: option, value: 0 };
+      allOptions.push(newObj);
     });
 
     var data = {
@@ -45,7 +45,7 @@ var NewPoll = React.createClass({
     }
     console.log(data)
     if (data.title && data.options.length > 1) {
-      $.post('http://localhost:8000/api', data, function(res) { console.log(res) });
+      $.post('http://localhost:8000/addpoll', data, function(res) { console.log(res) });
       hashHistory.push('/polls');
     }
   },

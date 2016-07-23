@@ -25,20 +25,37 @@ app.get('/onepoll/:id', cors(), function(req, res) {
     assert.equal(null, err);
     var collection = db.collection('polls');
     collection.findOne({title: req.params.id}).then(function(p){
-      console.log(p)
       res.json({Poll: p});
     });
     db.close();
   });
 });
 
-app.post('/api', cors(), function(req, res){
+app.post('/addpoll', cors(), function(req, res){
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     var collection = db.collection('polls');
 
     collection.insert({ title: req.body.title, options: req.body.options });
     console.log("Successfully inserted: " + req.body.options)
+    res.json({Success: true});
+    db.close();
+  });
+});
+
+app.post('/addvote/:id', cors(), function(req, res){
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    var collection = db.collection('polls');
+
+    // collection.update({title: req.params.id},
+    // { $set:
+    //     {
+    //       options: {}
+    //     }
+    //   }
+    // )
+    console.log(req.body.votedFor);
     res.json({Success: true});
     db.close();
   });
