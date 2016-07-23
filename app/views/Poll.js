@@ -1,5 +1,6 @@
 var React = require('react');
-var Navbar = require('./Navbar.js')
+var Navbar = require('./Navbar.js');
+var Chart = require('chart.js')
 require('../style.css');
 var titleStyle = {
   textAlign: "left",
@@ -16,7 +17,8 @@ btnStyle = {
   width: "200px"
 },
 chartStyle = {
-  textAlign: "center"
+  width: "500px",
+  height: "500px"
 };
 var Poll = React.createClass({
   getInitialState: function(){
@@ -85,15 +87,60 @@ var RenderOptions = React.createClass({
 });
 
 var RenderResults = React.createClass({
+  componentDidUpdate: function() {
+    if (this.props.poll.Poll !== undefined) {
+      $(function(){
+        var ctx = $('#myChart').get(0).getContext("2d"),
+        data = {
+          labels: [
+            "Red",
+            "Blue",
+            "Yellow"
+          ],
+          datasets: [
+            {
+              data: [300, 50, 100],
+              backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+              ],
+              hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+              ]
+            }]
+        },
+        options = {
+          maintainAspectRatio: true,
+          responsive: false
+        },
+        myPieChart = new Chart(ctx,{
+          type: 'pie',
+          data: data,
+          options: options
+        })
+        return true;
+      });
+    }
+    else {
+      return false;
+    }
+  },
   render: function() {
     if (this.props.poll.Poll !== undefined) {
       return (
         <div>
-          {this.props.poll.Poll.options.map(function(obj){
+          <div>
+            <canvas id="myChart" height="300px" style={chartStyle}></canvas>
+          </div>
+
+          {/* {this.props.poll.Poll.options.map(function(obj){
             for (var key in obj) {
               return <h4 style={chartStyle}>Option: {obj.optionName}<br/> Votes: {obj.value}</h4>
             }
-          })}
+          })} */}
         </div>
       )
     }
