@@ -1,6 +1,7 @@
 var React = require('react');
 var Navbar = require('./Navbar.js');
-var Chart = require('chart.js')
+var Chart = require('chart.js');
+var hashHistory = require('react-router').hashHistory;
 require('../style.css');
 var titleStyle = {
   textAlign: "left",
@@ -21,6 +22,7 @@ optionsStyle = {
 }
 chartStyle = {
 };
+
 var Poll = React.createClass({
   getInitialState: function(){
     return {
@@ -62,7 +64,7 @@ var RenderOptions = React.createClass({
         vote: optionSelected
       }
       $.post('http://localhost:8000/addvote/' + this.props.poll.Poll.title, votedFor, function(res){
-        console.log(res);
+        location.reload();
       });
     }
   },
@@ -142,18 +144,12 @@ var RenderResults = React.createClass({
           <div>
             <canvas id="myChart" height="300px" style={chartStyle}></canvas>
           </div>
-
-          {/* {this.props.poll.Poll.options.map(function(obj){
-            for (var key in obj) {
-              return <h4 style={chartStyle}>Option: {obj.optionName}<br/> Votes: {obj.value}</h4>
-            }
-          })} */}
         </div>
       )
     }
     else {
       return (
-        <div></div>
+        <div>Loading chart...</div>
       )
     }
   }

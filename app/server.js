@@ -43,7 +43,6 @@ app.post('/addpoll', cors(), function(req, res){
     })
 
     collection.insert({ title: req.body.title, options: options });
-    console.log("Successfully inserted: " + req.body.options)
     res.json({Success: true});
     db.close();
   });

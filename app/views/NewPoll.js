@@ -43,9 +43,8 @@ var NewPoll = React.createClass({
       title: this.state.title,
       options: allOptions
     }
-    console.log(data)
     if (data.title && data.options.length > 1) {
-      $.post('http://localhost:8000/addpoll', data, function(res) { console.log(res) });
+      $.post('http://localhost:8000/addpoll', data);
       hashHistory.push('/polls');
     }
   },
