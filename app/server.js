@@ -8,6 +8,7 @@ var MongoClient = require('mongodb').MongoClient,
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.options('/delete/', cors()); // allow use of .delete for XMLhttpRequests
 
 app.get('/allpolls', cors(), function(req, res) {
   MongoClient.connect(url, function(err, db) {
@@ -70,12 +71,16 @@ app.put('/api', cors(), function(req, res){
     db.close();
   });
 });
-
-app.delete('/api', cors(), function(req, res) {
+app.delete('/delete/', cors(), function(req, res) {
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
 
-    res.json({Type: "POST"});
+    var collection = db.collection('polls');
+
+      collection.deleteOne({title: req.body.title});
+    
+
+    res.json({Type: "DELETE"});
     db.close();
   });
 });

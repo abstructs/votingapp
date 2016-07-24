@@ -20,8 +20,14 @@ btnStyle = {
 optionsStyle = {
   paddingLeft: "60px"
 }
-chartStyle = {
-};
+deleteStyle = {
+  marginTop: "10px",
+  height: "35px",
+  width: "200px"
+},
+divBtnStyle = {
+  width: "100%"
+}
 
 var Poll = React.createClass({
   getInitialState: function(){
@@ -46,7 +52,7 @@ var Poll = React.createClass({
               <h2 style={titleStyle}>{this.props.params}</h2>
               <RenderOptions poll={this.state.pollData} />
             </div>
-            <div className="col-sm-4">
+            <div className="col-lg-3">
               <RenderResults poll={this.state.pollData} />
             </div>
           </div>
@@ -57,7 +63,7 @@ var Poll = React.createClass({
 });
 
 var RenderOptions = React.createClass({
-  handleClick: function() {
+  handleSubmit: function() {
     var optionSelected = $('#allOptions').find(":selected").text();
     if (typeof(optionSelected) === "string") {
       var votedFor = {
@@ -67,6 +73,17 @@ var RenderOptions = React.createClass({
         location.reload();
       });
     }
+  },
+  handleDelete: function() {
+    var that = this;
+    $.ajax({
+      url: 'http://localhost:8000/delete/',
+      data: that.props.poll.Poll,
+      type: 'DELETE',
+      success: function(res) {
+        hashHistory.push('/polls');
+      }
+    });
   },
   render: function() {
     if (this.props.poll.Poll !== undefined) {
@@ -79,7 +96,12 @@ var RenderOptions = React.createClass({
               return <option>{obj.optionName}</option>
             })}
           </select>
-          <button className="btn btn-success" type="submit" onClick={this.handleClick} style={btnStyle}>Submit</button>
+          <div style={divBtnStyle}>
+            <button className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</button>
+          </div>
+          <div style={divBtnStyle}>
+            <button className="btn btn-danger" type="submit" onClick={this.handleDelete} style={btnStyle}>Delete This Poll...</button>
+          </div>
         </div>
       )
     }
@@ -142,7 +164,7 @@ var RenderResults = React.createClass({
       return (
         <div>
           <div>
-            <canvas id="myChart" height="300px" style={chartStyle}></canvas>
+            <canvas id="myChart" height="300px"></canvas>
           </div>
         </div>
       )
