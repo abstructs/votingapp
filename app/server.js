@@ -1,89 +1,37 @@
-var MongoClient = require('mongodb').MongoClient,
-    assert = require('assert'),
-    cors = require('cors'),
-    express = require('express'),
-    app = express(),
-    url = 'mongodb://localhost:27017/votingapp',
-    bodyParser = require('body-parser');
+var MongoClient  = require('mongodb').MongoClient,
+    assert       = require('assert'),
+    cors         = require('cors'),
+    express      = require('express'),
+    app          = express(),
+    url          = 'mongodb://localhost:27017/votingapp',
+    bodyParser   = require('body-parser'),
+    passport     = require('passport'),
+    mongoose     = require('mongoose'),
+    flash        = require('connect-flash'),
+    morgan       = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    session      = require('express-session'),
+    configDB = require('./config/database.js');
 
+mongoose.connect(configDB.url); // connect to our database
+
+app.use(session({
+    secret: 'abstructsession',
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.options('/delete/', cors()); // allow use of .delete for XMLhttpRequests
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser()); // read cookies (needed for auth)
 
-app.get('/allpolls', cors(), function(req, res) {
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    var collection = db.collection('polls');
-    collection.find().toArray(function(err, poll){
-      res.json({Polls: poll});
-    });
-    db.close();
-  });
-});
+// required for passport
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
-app.get('/onepoll/:id', cors(), function(req, res) {
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    var collection = db.collection('polls');
-    collection.findOne({title: req.params.id}).then(function(p){
-      res.json({Poll: p});
-    });
-    db.close();
-  });
-});
-
-app.post('/addpoll', cors(), function(req, res){
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    var collection = db.collection('polls');
-    var title = req.body.title;
-    var options = req.body.options;
-
-    options.map(function(o){
-      o.value = parseInt(o.value);
-    })
-
-    collection.insert({ title: req.body.title, options: options });
-    res.json({Success: true});
-    db.close();
-  });
-});
-
-app.post('/addvote/:id', cors(), function(req, res){
-  MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    var collection = db.collection('polls');
-
-    collection.update(
-    {"options.optionName": req.body.vote },
-    { $inc: { "options.$.value": 1 }});
-
-    res.json({Success: true});
-    db.close();
-  });
-});
-
-app.put('/api', cors(), function(req, res){
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-
-    res.json({Type: "POST"});
-    db.close();
-  });
-});
-app.delete('/delete/', cors(), function(req, res) {
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-
-    var collection = db.collection('polls');
-
-      collection.deleteOne({title: req.body.title});
-    
-
-    res.json({Type: "DELETE"});
-    db.close();
-  });
-});
-
-
+require('./routes.js')(app, passport);
+require('./config/passport')(passport)
 app.listen(8000, function(){console.log("Server is running on port 8000...")});

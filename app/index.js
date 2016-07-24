@@ -6,6 +6,7 @@ require('./style.css');
 var Navbar = require('./views/Navbar.js');
 var Home = require('./views/Home.js');
 var Poll = require('./views/Poll.js');
+var SignIn = require('./views/SignIn.js');
 var NewPoll = require('./views/NewPoll.js');
 
 var Router = require('react-router').Router;
@@ -19,6 +20,17 @@ var PollListPage = React.createClass({
       <div>
         <Navbar pollNav={"active"}/>
         <Home />
+      </div>
+    )
+  }
+});
+
+var SignInPage = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <Navbar signNav={"active"}/>
+        <SignIn />
       </div>
     )
   }
@@ -46,6 +58,17 @@ var CreatePollPage = React.createClass({
   }
 });
 
+var ProfilePage = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <Navbar pollNav={"active"}/>
+        <h1>Hello</h1>
+      </div>
+    )
+  }
+});
+
 ReactDOM.render(
   <Router history={hashHistory}>
     <Redirect from="/" to="/polls" />
@@ -53,7 +76,11 @@ ReactDOM.render(
       </Route>
       <Route path="/poll/:id" component={PollPage}>
       </Route>
+      <Route path="/signin" component={SignInPage}>
+      </Route>
       <Route path="/new" component={CreatePollPage}>
+      </Route>
+      <Route path="/profile" component={ProfilePage}>
       </Route>
     </Router>,
   document.getElementById('app')

@@ -16,16 +16,16 @@ var SignIn = React.createClass({
     return (
       <div className="container">
         <h1 style={divStyle}>Sign In</h1>
-        <form>
+        <form action="http://localhost:8000/signup" method="post">
           <fieldset className="form-group">
-          <label>Title</label>
-          <input type="text" className="form-control" placeholder="Username"/>
+          <label>Email</label>
+          <input type="text" className="form-control" name="email"/>
         </fieldset>
         <fieldset className="form-group">
-          <label>Options</label>
-            <input type="password" className="form-control" placeholder="Password"/>
+          <label>Password</label>
+            <input type="password" className="form-control" name="password"/>
         </fieldset>
-        <button className="btn btn-info" style={btnStyle} type="submit">Create!</button>
+        <button className="btn btn-info" style={btnStyle} type="submit">Sign Up!</button>
         </form>
       </div>
     )
