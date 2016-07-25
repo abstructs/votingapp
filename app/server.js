@@ -11,12 +11,12 @@ var MongoClient  = require('mongodb').MongoClient,
     morgan       = require('morgan'),
     cookieParser = require('cookie-parser'),
     session      = require('express-session'),
-    configDB = require('./config/database.js');
-
+    configDB = require('./config/database.js'),
+    cookieSesh = require('./config/cookiesesh.js');
 mongoose.connect(configDB.url); // connect to our database
 
 app.use(session({
-    secret: 'abstructsession',
+    secret: cookiesesh,
     proxy: true,
     resave: true,
     saveUninitialized: true
