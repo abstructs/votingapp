@@ -20,7 +20,7 @@ var Navbar = React.createClass({
               <ul className="nav navbar-nav">
                 <li className={this.props.homeNav || ""}><a href="#">Home</a></li>
                 <li className={this.props.pollNav || ""}><a href="#polls">Polls</a></li>
-                <li className={this.props.signNav || ""}><a href="#signin">Sign In</a></li>
+                <li className={this.props.signNav || ""}><a href="#signup">Sign Up</a></li>
               </ul>
             </div>
           </div>

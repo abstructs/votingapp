@@ -11,26 +11,29 @@ var MongoClient  = require('mongodb').MongoClient,
     morgan       = require('morgan'),
     cookieParser = require('cookie-parser'),
     session      = require('express-session'),
-    configDB = require('./config/database.js'),
-    cookieSesh = require('./config/cookiesesh.js');
+    configDB     = require('./config/database.js'),
+    cookieSesh   = require('./config/cookiesesh.js');
+
 mongoose.connect(configDB.url); // connect to our database
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser(cookieSesh.cookieSesh)); // read cookies (needed for auth)
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
 
 app.use(session({
-    secret: cookiesesh,
+    secret: cookieSesh.cookieSesh,
     proxy: true,
     resave: true,
     saveUninitialized: true
 }));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.options('/delete/', cors()); // allow use of .delete for XMLhttpRequests
-app.use(morgan('dev')); // log every request to the console
-app.use(cookieParser()); // read cookies (needed for auth)
 
 // required for passport
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+app.options('/delete/', cors()); // allow use of .delete for XMLhttpRequests
 
 require('./routes.js')(app, passport);
 require('./config/passport')(passport)
