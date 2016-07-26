@@ -92,6 +92,10 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
 
+    app.get('/isauth', isLoggedIn, function(req, res){
+      res.send('hello');
+    });
+
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect : 'http://localhost:8080/#/profile', // redirect to the secure profile section
         failureRedirect : 'http://localhost:8080/#/signup', // redirect back to the signup page if there is an error
@@ -109,6 +113,6 @@ function isLoggedIn(req, res, next) {
       return next();
     }
     else {
-      res.redirect('/');
+      res.sendStatus(403);
     }
 }

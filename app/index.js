@@ -9,6 +9,8 @@ var Poll = require('./views/Poll.js');
 var SignUp = require('./views/SignUp.js');
 var NewPoll = require('./views/NewPoll.js');
 var LogIn = require('./views/LogIn.js');
+var Profile = require('./views/Profile.js');
+
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 var Redirect = require('react-router').Redirect;
@@ -73,7 +75,7 @@ var ProfilePage = React.createClass({
     return (
       <div>
         <Navbar pollNav={"active"}/>
-        <h1>Hello</h1>
+        <Profile />
       </div>
     )
   }

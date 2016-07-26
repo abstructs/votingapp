@@ -33,6 +33,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+app.options('/isauth', cors());
 app.options('/delete/', cors()); // allow use of .delete for XMLhttpRequests
 
 require('./routes.js')(app, passport);
