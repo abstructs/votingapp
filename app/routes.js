@@ -82,17 +82,15 @@ module.exports = function(app, passport) {
     });
 
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
-            user : req.user // get the user out of session and pass to template
-        });
+        res.send(req.user)
     });
 
-    app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
+    app.get('/logout', cors(), function(req, res) {
+      req.logout();
     });
 
-    app.get('/isauth', isLoggedIn, function(req, res){
+    app.get('/isauth', function(req, res){
+      console.log(req.cookies);
       res.send('hello');
     });
 
@@ -110,6 +108,7 @@ module.exports = function(app, passport) {
 };
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
+      console.log(req.isAuthenticated())
       return next();
     }
     else {

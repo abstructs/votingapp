@@ -15,7 +15,7 @@ divStyle = {
 var LogIn = React.createClass({
   render: function() {
     return (
-      <div className="container">>
+      <div className="container">
         <h1 style={divStyle}>Log In</h1>
         <form action="http://localhost:8000/login" method="post">
           <fieldset className="form-group">

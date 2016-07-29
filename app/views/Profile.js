@@ -6,9 +6,9 @@ var Profile = React.createClass({
     this.isAuth();
   },
   isAuth: function() {
-    $.get('http://localhost:8000/isauth', function(res){
-      console.log(res)
-    });
+    // $.get('http://localhost:8000/isauth', function(res){
+    //   console.log(res)
+    // });
   },
   render: function() {
     return (
