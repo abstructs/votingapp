@@ -76,7 +76,7 @@ module.exports = function(app, passport) {
         var collection = db.collection('polls');
 
         collection.deleteOne({title: req.body.title});
-
+        res.json({status: 'success'})
         db.close();
       });
     });
@@ -89,8 +89,7 @@ module.exports = function(app, passport) {
       req.logout();
     });
 
-    app.get('/isauth', function(req, res){
-      console.log(req.cookies);
+    app.get('/isauth', isLoggedIn, function(req, res){
       res.send('hello');
     });
 
@@ -105,10 +104,12 @@ module.exports = function(app, passport) {
         failureRedirect : 'http://localhost:8080/#/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
+
 };
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-      console.log(req.isAuthenticated())
+  console.log('hi')
+  console.log(req.isAuthenticated())
+    if (req) {
       return next();
     }
     else {

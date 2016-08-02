@@ -1,3 +1,3 @@
 module.exports = {
-  'cookieSesh' : 'polygoningSilent'
+  'cookieSesh': 'polygoningSilent'
 };
