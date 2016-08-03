@@ -2,18 +2,40 @@ var React = require('react');
 var $ = require('jQuery');
 
 var Profile = React.createClass({
+  getInitialState: function() {
+    return {
+      isAuth: false
+    }
+  },
   componentDidMount: function(){
     this.isAuth();
   },
   isAuth: function() {
-    $.get('http://localhost:8000/isauth', function(res){
-      console.log(res)
+    $.ajax({
+      url: 'http://localhost:8000/isauth',
+      xhrFields: {withCredentials: true},
+      success: function(res) {
+        this.setState({
+          isAuth: res.isAuth
+        })
+      }.bind(this),
+      error: function(){
+        // can put in a flash message
+        isAuth: false
+      }
     });
   },
   render: function() {
-    return (
-      <div></div>
-    )
+    if (this.state.isAuth) {
+      return (
+        <div>WELCOME</div>
+      )
+    }
+    else {
+      return (
+        <div>404</div>
+      )
+    }
   }
 })
 

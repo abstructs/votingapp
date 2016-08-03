@@ -89,8 +89,9 @@ module.exports = function(app, passport) {
       req.logout();
     });
 
-    app.get('/isauth', isLoggedIn, function(req, res){
-      res.send('hello');
+    app.get('/isauth', isLoggedIn, function(req, res) {
+      // res.header('Access-Control-Allow-Credentials', true);
+      res.json({isAuth: true})
     });
 
     app.post('/signup', passport.authenticate('local-signup', {
@@ -107,9 +108,7 @@ module.exports = function(app, passport) {
 
 };
 function isLoggedIn(req, res, next) {
-  console.log('hi')
-  console.log(req.isAuthenticated())
-    if (req) {
+    if (req.isAuthenticated()) {
       return next();
     }
     else {

@@ -74,12 +74,29 @@ var ProfilePage = React.createClass({
   render: function() {
     return (
       <div>
+        {console.log(isAuth())}
         <Navbar pollNav={"active"}/>
         <Profile />
       </div>
     )
   }
 });
+
+var isAuth = function() {
+  $.ajax({
+    url: 'http://localhost:8000/isauth',
+    xhrFields: {withCredentials: true},
+    success: function(res) {
+
+    }.bind(this),
+    error: function(){
+
+    }
+  });
+}
+var result = function(result){
+  return result
+}
 
 ReactDOM.render(
   <Router history={hashHistory}>
