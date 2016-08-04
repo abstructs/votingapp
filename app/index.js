@@ -7,23 +7,72 @@ var Navbar = require('./views/Navbar.js');
 var Home = require('./views/Home.js');
 var Poll = require('./views/Poll.js');
 var SignUp = require('./views/SignUp.js');
-var NewPoll = require('./views/NewPoll.js');
+var NewPoll = require('./views/UserViews/NewPoll.js');
 var LogIn = require('./views/LogIn.js');
-var Profile = require('./views/Profile.js');
+var MyPolls = require('./views/UserViews/MyPolls.js');
 
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 var Redirect = require('react-router').Redirect;
 var hashHistory = require('react-router').hashHistory;
 
+var isAuth = function(callback) {
+  return $.ajax({
+    url: 'http://localhost:8000/isauth',
+    xhrFields: {withCredentials: true},
+    success: function() {
+      if (callback) {
+        callback(true);
+      }
+    },
+    error: function() {
+      if (callback) {
+        callback(false);
+      }
+    }
+  });
+};
+
 var PollListPage = React.createClass({
+  getInitialState: function(){
+    return {
+      isLoggedIn: undefined
+    }
+  },
+  componentDidMount: function(){
+    var that = this;
+    isAuth().then(function(r){
+      that.setState({
+        isLoggedIn: true
+      })
+    }).fail(function(r){
+      that.setState({
+        isLoggedIn: false
+      })
+    })
+  },
   render: function() {
-    return (
-      <div>
-        <Navbar pollNav={"active"}/>
-        <Home />
-      </div>
-    )
+    if (this.state.isLoggedIn !== undefined && this.state.isLoggedIn === true) {
+      return (
+        <div>
+          <Navbar pollNav={"active"} loggedIn={true}/>
+          <Home loggedIn={true} />
+        </div>
+      )
+    }
+    else if (this.state.isLoggedIn !== undefined && this.state.isLoggedIn === false) {
+      return (
+        <div>
+          <Navbar pollNav={"active"} loggedIn={false}/>
+          <Home loggedIn={false} />
+        </div>
+      )
+    }
+    else {
+      return (
+        <div>Loading...</div>
+      )
+    }
   }
 });
 
@@ -49,13 +98,45 @@ var LogInPage = React.createClass({
 });
 
 var PollPage = React.createClass({
+  getInitialState: function(){
+    return {
+      isLoggedIn: undefined
+    }
+  },
+  componentDidMount: function(){
+    var that = this;
+    isAuth().then(function(r){
+      that.setState({
+        isLoggedIn: true
+      })
+    }).fail(function(r){
+      that.setState({
+        isLoggedIn: false
+      })
+    })
+  },
   render: function() {
-    return (
-      <div>
-        <Navbar pollNav={"active"}/>
-        <Poll params={this.props.params.id}/>
-      </div>
-    )
+    if (this.state.isLoggedIn === true) {
+      return (
+        <div>
+          <Navbar pollNav={"active"} loggedIn={true}/>
+          <Poll params={this.props.params.id} loggedIn={true}/>
+        </div>
+      )
+    }
+    else if (this.state.isLoggedIn === false) {
+      return (
+        <div>
+          <Navbar pollNav={"active"} loggedIn={false}/>
+          <Poll params={this.props.params.id} loggedIn={false}/>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div>Loading...</div>
+      )
+    }
   }
 });
 
@@ -70,33 +151,16 @@ var CreatePollPage = React.createClass({
   }
 });
 
-var ProfilePage = React.createClass({
+var MyPollsPage = React.createClass({
   render: function() {
     return (
       <div>
-        {console.log(isAuth())}
-        <Navbar pollNav={"active"}/>
-        <Profile />
+        <Navbar myPollsNav={"active"}/>
+        <MyPolls />
       </div>
     )
   }
 });
-
-var isAuth = function() {
-  $.ajax({
-    url: 'http://localhost:8000/isauth',
-    xhrFields: {withCredentials: true},
-    success: function(res) {
-
-    }.bind(this),
-    error: function(){
-
-    }
-  });
-}
-var result = function(result){
-  return result
-}
 
 ReactDOM.render(
   <Router history={hashHistory}>
@@ -109,7 +173,7 @@ ReactDOM.render(
       </Route>
       <Route path="/new" component={CreatePollPage}>
       </Route>
-      <Route path="/profile" component={ProfilePage}>
+      <Route path="/mypolls" component={MyPollsPage}>
       </Route>
       <Route path="/login" component={LogInPage}>
       </Route>

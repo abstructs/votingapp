@@ -11,7 +11,6 @@ divStyle = {
     textAlign: "center"
 };
 
-
 var LogIn = React.createClass({
   render: function() {
     return (
