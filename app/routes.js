@@ -34,14 +34,13 @@ module.exports = function(app, passport) {
       MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         var collection = db.collection('polls');
-        var title = req.body.title;
         var options = req.body.options;
 
         options.map(function(o){
           o.value = parseInt(o.value);
         })
 
-        collection.insert({ title: req.body.title, options: options });
+        collection.insert({username: req.body.username, title: req.body.title, options: options });
         res.json({Success: true});
         db.close();
       });
@@ -90,8 +89,7 @@ module.exports = function(app, passport) {
     });
 
     app.get('/isauth', isLoggedIn, function(req, res) {
-      // res.header('Access-Control-Allow-Credentials', true);
-      res.json({isAuth: true})
+      res.json({username: req.user.local.email})
     });
 
     app.post('/signup', passport.authenticate('local-signup', {

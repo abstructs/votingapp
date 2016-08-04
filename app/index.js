@@ -141,13 +141,45 @@ var PollPage = React.createClass({
 });
 
 var CreatePollPage = React.createClass({
+  getInitialState: function(){
+    return {
+      isLoggedIn: undefined
+    }
+  },
+  componentDidMount: function(){
+    var that = this;
+    isAuth().then(function(r){
+      that.setState({
+        isLoggedIn: true
+      })
+    }).fail(function(r){
+      that.setState({
+        isLoggedIn: false
+      })
+    })
+  },
   render: function() {
-    return (
-      <div>
-        <Navbar pollNav={"active"}/>
-        <NewPoll />
-      </div>
-    )
+    if (this.state.isLoggedIn === true) {
+      return (
+        <div>
+          <Navbar pollNav={"active"} loggedIn={true}/>
+          <NewPoll />
+        </div>
+      )
+    }
+    else if (this.state.isLoggedIn === false) {
+      return (
+        <div>
+          <Navbar pollNav={"active"} loggedIn={false}/>
+          <NewPoll />
+        </div>
+      )
+    }
+    else {
+      return (
+        <div></div>
+      )
+    }
   }
 });
 

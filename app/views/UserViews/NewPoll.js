@@ -17,9 +17,29 @@ btnStyle = {
 var NewPoll = React.createClass({
   getInitialState: function() {
     return {
+      userEmail: "",
       title: "",
       options: ""
     }
+  },
+  componentDidMount: function(){
+    var that = this;
+    $.ajax({
+      url: 'http://localhost:8000/isauth',
+      xhrFields: {withCredentials: true},
+      success: function(res) {
+        this.setState({
+          isAuth: true,
+          userEmail: res.username
+        })
+      }.bind(this),
+      error: function(){
+        that.setState({
+          isAuth: false,
+          userEmail: undefined
+        })
+      }
+    });
   },
   handleTitleChange: function(e) {
     this.setState({
@@ -40,10 +60,11 @@ var NewPoll = React.createClass({
     });
 
     var data = {
+      username: this.state.userEmail,
       title: this.state.title,
       options: allOptions
     }
-    if (data.title && data.options.length > 1) {
+    if (data.title && data.options.length > 1 && data.username.length) {
       $.post('http://localhost:8000/addpoll', data);
       hashHistory.push('/polls');
     }
