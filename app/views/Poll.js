@@ -52,7 +52,7 @@ var Poll = React.createClass({
             <div className="container">
               <div className="col-sm-6" style={optionsStyle}>
                 <h2 style={titleStyle}>{this.state.pollData.Poll.title}</h2>
-                <RenderOptions poll={this.state.pollData} />
+                <RenderOptions poll={this.state.pollData} userLoggedIn={this.props.userLoggedIn}/>
               </div>
               <div className="col-lg-3">
                 <RenderResults poll={this.state.pollData} />
@@ -107,7 +107,7 @@ var RenderOptions = React.createClass({
           <div style={divBtnStyle}>
             <button className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</button>
           </div>
-          <DeleteBtn />
+          <DeleteBtn userLoggedIn={this.props.userLoggedIn} pollUsername={this.props.poll.Poll.username} handleDelete={this.handleDelete}/>
         </div>
       )
     }
@@ -121,11 +121,18 @@ var RenderOptions = React.createClass({
 
 var DeleteBtn = React.createClass({
   render: function(){
-    return (
-      <div style={divBtnStyle}>
-        <button className="btn btn-danger" type="submit" onClick={this.handleDelete} style={btnStyle}>Delete This Poll...</button>
-      </div>
-    )
+    if (this.props.pollUsername === this.props.userLoggedIn) {
+      return (
+        <div style={divBtnStyle}>
+          <button className="btn btn-danger" type="submit" onClick={this.props.handleDelete} style={btnStyle}>Delete This Poll...</button>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div></div>
+      )
+    }
   }
 })
 

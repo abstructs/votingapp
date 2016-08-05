@@ -74,8 +74,7 @@ module.exports = function(app, passport) {
         assert.equal(null, err);
 
         var collection = db.collection('polls');
-
-        collection.deleteOne({title: req.body.title});
+        collection.deleteOne({_id: ObjectId(req.body._id)});
         res.json({status: 'success'})
         db.close();
       });
