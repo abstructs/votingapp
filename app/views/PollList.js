@@ -14,7 +14,7 @@ var PollList = React.createClass({
       return (
         <div>
           {this.props.pollData.Polls.map(function(poll){
-            return <Link className="list-group-item" style={textStyle} to={`/poll/${poll.title}`} key={count++}>{poll.title}</Link>
+            return <Link className="list-group-item" style={textStyle} to={`/poll/${poll._id}`} key={count++}>{poll.title}</Link>
           })}
         </div>
       )

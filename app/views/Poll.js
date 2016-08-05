@@ -3,6 +3,7 @@ var Navbar = require('./Navbar.js');
 var Chart = require('chart.js');
 var hashHistory = require('react-router').hashHistory;
 require('../style.css');
+
 var titleStyle = {
   textAlign: "left",
   marginBottom: "15px"
@@ -36,29 +37,36 @@ var Poll = React.createClass({
     }
   },
   componentDidMount: function() {
-    $.get('http://localhost:8000/onepoll/' + this.props.params, function(poll){
+    $.get('http://localhost:8000/onepoll/' + this.props.params, function(res){
       this.setState({
-        pollData: poll,
+        pollData: res,
         selection: ""
       })
     }.bind(this))
   },
   render: function() {
-    return (
-      <div>
-        <div className="jumbotron">
-          <div className="container">
-            <div className="col-sm-6" style={optionsStyle}>
-              <h2 style={titleStyle}>{this.props.params}</h2>
-              <RenderOptions poll={this.state.pollData} />
-            </div>
-            <div className="col-lg-3">
-              <RenderResults poll={this.state.pollData} />
+    if (this.state.pollData.Poll) {
+      return (
+        <div>
+          <div className="jumbotron">
+            <div className="container">
+              <div className="col-sm-6" style={optionsStyle}>
+                <h2 style={titleStyle}>{this.state.pollData.Poll.title}</h2>
+                <RenderOptions poll={this.state.pollData} />
+              </div>
+              <div className="col-lg-3">
+                <RenderResults poll={this.state.pollData} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    }
+    else {
+      return (
+        <div></div>
+      )
+    }
   }
 });
 
@@ -99,9 +107,7 @@ var RenderOptions = React.createClass({
           <div style={divBtnStyle}>
             <button className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</button>
           </div>
-          <div style={divBtnStyle}>
-            <button className="btn btn-danger" type="submit" onClick={this.handleDelete} style={btnStyle}>Delete This Poll...</button>
-          </div>
+          <DeleteBtn />
         </div>
       )
     }
@@ -113,8 +119,18 @@ var RenderOptions = React.createClass({
   }
 });
 
+var DeleteBtn = React.createClass({
+  render: function(){
+    return (
+      <div style={divBtnStyle}>
+        <button className="btn btn-danger" type="submit" onClick={this.handleDelete} style={btnStyle}>Delete This Poll...</button>
+      </div>
+    )
+  }
+})
+
 var RenderResults = React.createClass({
-  componentDidUpdate: function() {
+  componentDidMount: function() {
     if (this.props.poll.Poll !== undefined) {
       $(function(){
         var pollData = {

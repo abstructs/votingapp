@@ -86,6 +86,7 @@ var SignUpPage = React.createClass({
     )
   }
 });
+
 var LogInPage = React.createClass({
   render: function() {
     return (
@@ -98,7 +99,7 @@ var LogInPage = React.createClass({
 });
 
 var PollPage = React.createClass({
-  getInitialState: function(){
+  getInitialState: function() {
     return {
       isLoggedIn: undefined
     }
@@ -106,6 +107,7 @@ var PollPage = React.createClass({
   componentDidMount: function(){
     var that = this;
     isAuth().then(function(r){
+
       that.setState({
         isLoggedIn: true
       })
@@ -187,7 +189,7 @@ var MyPollsPage = React.createClass({
   render: function() {
     return (
       <div>
-        <Navbar myPollsNav={"active"}/>
+        <Navbar myPollsNav={"active"} />
         <MyPolls />
       </div>
     )

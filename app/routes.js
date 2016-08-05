@@ -4,7 +4,8 @@ var express = require('express'),
     assert = require('assert'),
     cors = require('cors'),
     express = require('express'),
-    url = 'mongodb://localhost:27017/votingapp';
+    url = 'mongodb://localhost:27017/votingapp',
+    ObjectId = require('mongodb').ObjectID;
 
 
 module.exports = function(app, passport) {
@@ -23,7 +24,7 @@ module.exports = function(app, passport) {
       MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         var collection = db.collection('polls');
-        collection.findOne({title: req.params.id}).then(function(p){
+        collection.findOne({_id: ObjectId(req.params.id)}).then(function(p){
           res.json({Poll: p});
         });
         db.close();
