@@ -51,9 +51,8 @@ module.exports = function(app, passport) {
       MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var collection = db.collection('polls');
-
         collection.update(
-        {"options.optionName": req.body.vote },
+        {_id: ObjectId(req.body.id), "options.optionName": req.body.vote },
         { $inc: { "options.$.value": 1 }});
 
         res.json({Success: true});
@@ -90,6 +89,18 @@ module.exports = function(app, passport) {
 
     app.get('/isauth', isLoggedIn, function(req, res) {
       res.json({username: req.user.local.email})
+    });
+
+    app.post('/mypolls', isLoggedIn, function(req, res){
+      MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        var collection = db.collection('polls');
+        console.log(req.body.username)
+        collection.find({username: req.body.username}).toArray(function(err, poll) {
+          res.json({Polls: poll});
+        });
+        db.close();
+      });
     });
 
     app.post('/signup', passport.authenticate('local-signup', {

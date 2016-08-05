@@ -25,9 +25,9 @@ var Home = React.createClass({
     }
   },
   componentDidMount: function() {
-    this.serverRequest = $.get('http://localhost:8000/allpolls', function(polls){
+    $.get('http://localhost:8000/allpolls', function(res){
       this.setState({
-        pollData: polls
+        pollData: res
       })
     }.bind(this))
   },

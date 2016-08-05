@@ -1,10 +1,16 @@
 var React = require('react');
 var $ = require('jQuery');
-
+var PollList = require('../PollList.js');
+var divStyle = {
+    padding: "40px 15px",
+    textAlign: "center"
+};
 var MyPolls = React.createClass({
   getInitialState: function() {
     return {
-      isAuth: false
+      isAuth: false,
+      userEmail: "",
+      userPollData: []
     }
   },
   componentDidMount: function(){
@@ -16,8 +22,10 @@ var MyPolls = React.createClass({
       xhrFields: {withCredentials: true},
       success: function(res) {
         this.setState({
-          isAuth: res.isAuth
+          isAuth: true,
+          userEmail: res.username
         })
+        this.getUserPolls();
       }.bind(this),
       error: function(){
         // can put in a flash message
@@ -25,10 +33,34 @@ var MyPolls = React.createClass({
       }
     });
   },
+  getUserPolls: function(){
+    var that = this;
+    $.ajax({
+      url: 'http://localhost:8000/mypolls/',
+      xhrFields: {withCredentials: true},
+      data: {username: that.state.userEmail},
+      type: 'POST',
+      success: function(res) {
+        that.setState({
+          userPollData: res
+        })
+      }
+    });
+  },
   render: function() {
-    if (this.state.isAuth) {
+    if (this.state.isAuth === true && this.state.userPollData !== undefined) {
       return (
-        <div>WELCOME</div>
+        <div>
+          <div className="container">
+            <div style={divStyle}>
+              <h1>Your Polls</h1>
+              <p className="lead">Here{"\'"}s a list of polls that you own!</p>
+            </div>
+            <div className="list-group">
+              <PollList pollData={this.state.userPollData} />
+            </div>
+          </div>
+        </div>
       )
     }
     else {

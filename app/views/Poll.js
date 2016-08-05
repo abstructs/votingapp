@@ -52,7 +52,7 @@ var Poll = React.createClass({
             <div className="container">
               <div className="col-sm-6" style={optionsStyle}>
                 <h2 style={titleStyle}>{this.state.pollData.Poll.title}</h2>
-                <RenderOptions poll={this.state.pollData} userLoggedIn={this.props.userLoggedIn}/>
+                <RenderOptions poll={this.state.pollData} userLoggedIn={this.props.userLoggedIn} pollId={this.props.params}/>
               </div>
               <div className="col-lg-3">
                 <RenderResults poll={this.state.pollData} />
@@ -75,9 +75,10 @@ var RenderOptions = React.createClass({
     var optionSelected = $('#allOptions').find(":selected").text();
     if (typeof(optionSelected) === "string") {
       var votedFor = {
+        id: this.props.pollId,
         vote: optionSelected
       }
-      $.post('http://localhost:8000/addvote/' + this.props.poll.Poll.title, votedFor, function(res){
+      $.post('http://localhost:8000/addvote/' + this.props.poll.Poll._id, votedFor, function(res){
         location.reload();
       });
     }
