@@ -16,20 +16,10 @@ var Route = require('react-router').Route;
 var Redirect = require('react-router').Redirect;
 var hashHistory = require('react-router').hashHistory;
 
-var isAuth = function(callback) {
+var isAuth = function() {
   return $.ajax({
     url: 'http://localhost:8000/isauth',
-    xhrFields: {withCredentials: true},
-    success: function() {
-      if (callback) {
-        callback(true);
-      }
-    },
-    error: function() {
-      if (callback) {
-        callback(false);
-      }
-    }
+    xhrFields: {withCredentials: true}
   });
 };
 
@@ -130,7 +120,7 @@ var PollPage = React.createClass({
       return (
         <div>
           <Navbar pollNav={"active"} loggedIn={false}/>
-          <Poll params={this.props.params.id} loggedIn={false}/>
+          <Poll params={this.props.params.id} userLoggedIn={false} loggedIn={false}/>
         </div>
       )
     }

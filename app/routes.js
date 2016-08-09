@@ -47,6 +47,22 @@ module.exports = function(app, passport) {
       });
     });
 
+    app.post('/addoption/:id', cors(), function(req, res){
+      MongoClient.connect(url, function(err, db){
+        if (err) throw err;
+        if (req.body.newOption !== "I'd like a custom option...") {
+          var collection = db.collection('polls');
+          collection.update(
+          {_id: ObjectId(req.body.id) },
+          {$push: {"options": {"optionName": req.body.newOption}}});
+          res.json({Success: true});
+        }
+        else {
+          res.json({Success: false})
+        }
+      })
+    });
+
     app.post('/addvote/:id', cors(), function(req, res){
       MongoClient.connect(url, function(err, db) {
         if (err) throw err;

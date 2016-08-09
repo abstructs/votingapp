@@ -52,7 +52,7 @@ var Poll = React.createClass({
             <div className="container">
               <div className="col-sm-6" style={optionsStyle}>
                 <h2 style={titleStyle}>{this.state.pollData.Poll.title}</h2>
-                <RenderOptions poll={this.state.pollData} userLoggedIn={this.props.userLoggedIn} pollId={this.props.params}/>
+                <RenderOptions poll={this.state.pollData} userLoggedIn={this.props.userLoggedIn} pollId={this.props.params} loggedIn={this.props.loggedIn}/>
               </div>
               <div className="col-lg-3">
                 <RenderResults poll={this.state.pollData} />
@@ -71,9 +71,14 @@ var Poll = React.createClass({
 });
 
 var RenderOptions = React.createClass({
+  getInitialState: function(){
+    return {
+      customOption: false
+    }
+  },
   handleSubmit: function() {
-    var optionSelected = $('#allOptions').find(":selected").text();
-    if (typeof(optionSelected) === "string") {
+    if (this.state.customOption === false) {
+      var optionSelected = $('#allOptions').find(":selected").text();
       var votedFor = {
         id: this.props.pollId,
         vote: optionSelected
@@ -81,6 +86,33 @@ var RenderOptions = React.createClass({
       $.post('http://localhost:8000/addvote/' + this.props.poll.Poll._id, votedFor, function(res){
         location.reload();
       });
+    }
+    else if (this.state.customOption === true) {
+      var optionSelected = $('#customOption').val();
+      console.log(optionSelected)
+      if (optionSelected.length !== 0) {
+        var voteAdded = {
+          id: this.props.pollId,
+          newOption: optionSelected
+        }
+
+        $.post('http://localhost:8000/addoption/' + this.props.poll.Poll._id, voteAdded, function(){
+          location.reload();
+        });
+      }
+    }
+  },
+  change: function(e){
+    var optionSelected = $('#allOptions option:last-child').val();
+    if (optionSelected === e.target.value) {
+      this.setState({
+        customOption: true
+      })
+    }
+    else {
+      this.setState({
+        customOption: false
+      })
     }
   },
   handleDelete: function() {
@@ -95,12 +127,31 @@ var RenderOptions = React.createClass({
     });
   },
   render: function() {
-    if (this.props.poll.Poll !== undefined) {
+    if (this.props.poll.Poll !== undefined && this.props.loggedIn === true) {
       return (
         <div>
           {this.props.title}
           <p>I would like to vote...</p>
-          <select className="form-control" id="allOptions" style={selectStyle}>
+          <select className="form-control" id="allOptions" style={selectStyle} onChange={this.change}>
+            {this.props.poll.Poll.options.map(function(obj){
+              return <option>{obj.optionName}</option>
+            })}
+            <CusOption loggedIn={true}/>
+          </select>
+          <CustomOption selected={this.state.customOption} loggedIn={true} />
+          <div style={divBtnStyle}>
+            <button className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</button>
+          </div>
+          <DeleteBtn userLoggedIn={this.props.userLoggedIn} pollUsername={this.props.poll.Poll.username} handleDelete={this.handleDelete}/>
+        </div>
+      )
+    }
+    else if (this.props.loggedIn === false) {
+      return (
+        <div>
+          {this.props.title}
+          <p>I would like to vote...</p>
+          <select className="form-control" id="allOptions" style={selectStyle} onChange={this.change}>
             {this.props.poll.Poll.options.map(function(obj){
               return <option>{obj.optionName}</option>
             })}
@@ -108,7 +159,6 @@ var RenderOptions = React.createClass({
           <div style={divBtnStyle}>
             <button className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</button>
           </div>
-          <DeleteBtn userLoggedIn={this.props.userLoggedIn} pollUsername={this.props.poll.Poll.username} handleDelete={this.handleDelete}/>
         </div>
       )
     }
@@ -119,6 +169,35 @@ var RenderOptions = React.createClass({
     }
   }
 });
+
+var CusOption = React.createClass({
+  render: function() {
+    if (this.props.loggedIn === true)
+    return (
+      <option>I{"\'"}d like a custom option...</option>
+    )
+    else {
+      return (
+        <option></option>
+      )
+    }
+  }
+})
+
+var CustomOption = React.createClass({
+  render: function() {
+    if (this.props.selected === true && this.props.loggedIn === true) {
+      return (
+        <div>
+          <input type="text" placeholder="Custom Option..." id="customOption"/>
+        </div>
+      )
+    }
+    else {
+      return <div></div>
+    }
+  }
+})
 
 var DeleteBtn = React.createClass({
   render: function(){
