@@ -99,8 +99,9 @@ module.exports = function(app, passport) {
         res.send(req.user)
     });
 
-    app.get('/logout', cors(), function(req, res) {
-      req.logout();
+    app.get('/logout', isLoggedIn, function(req, res) {
+      req.session.destroy();
+      res.send('Success')
     });
 
     app.get('/isauth', isLoggedIn, function(req, res) {
@@ -111,7 +112,6 @@ module.exports = function(app, passport) {
       MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         var collection = db.collection('polls');
-        console.log(req.body.username)
         collection.find({username: req.body.username}).toArray(function(err, poll) {
           res.json({Polls: poll});
         });

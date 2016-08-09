@@ -186,6 +186,36 @@ var MyPollsPage = React.createClass({
   }
 });
 
+var LogOut = React.createClass({
+  componentDidMount: function(){
+    $.get('http://localhost:8000/logout', function(res){
+      hashHistory
+    });
+  },
+  render: function(){
+    return (
+      <div></div>
+    )
+  }
+});
+
+var handleLogOut = function(nextState, replace, callback){
+  console.log('call')
+  $.ajax({
+    url: 'http://localhost:8000/logout',
+    xhrFields: {withCredentials: true},
+    type: "GET",
+    success: function() {
+      location.hash = "";
+      location.reload();
+    },
+    error: function(){
+      location.hash = "";
+      location.reload();
+    }
+  });
+};
+
 ReactDOM.render(
   <Router history={hashHistory}>
     <Redirect from="/" to="/polls" />
@@ -200,6 +230,8 @@ ReactDOM.render(
       <Route path="/mypolls" component={MyPollsPage}>
       </Route>
       <Route path="/login" component={LogInPage}>
+      </Route>
+      <Route path="/logout" onEnter={handleLogOut}>
       </Route>
     </Router>,
   document.getElementById('app')
