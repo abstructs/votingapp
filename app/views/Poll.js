@@ -127,7 +127,6 @@ var RenderOptions = React.createClass({
     });
   },
   handleShare: function(){
-    console.log(this.props.poll.Poll._id)
     var uri = this.props.poll.Poll.title + " | http://localhost:8080/#/poll/" + this.props.poll.Poll._id.toString();
     return "https://twitter.com/intent/tweet/?text=" + encodeURIComponent(uri);
   },

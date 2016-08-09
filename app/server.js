@@ -30,7 +30,7 @@ if ('OPTIONS' == req.method) {
 });
 
 
-mongoose.connect(configDB.url); // connect to our database
+mongoose.connect(process.env.MONGOLAB_URI || configDB.url); // connect to our database
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({extended: true}));
@@ -52,4 +52,4 @@ app.options('/delete/', cors()); // allow use of .delete for XMLhttpRequests
 require('./routes.js')(app, passport);
 require('./config/passport')(passport);
 
-http.createServer(app).listen(8000);
+http.createServer(app).listen(process.env.PORT || 8000);

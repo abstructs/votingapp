@@ -20,6 +20,10 @@ module.exports = function(app, passport) {
       });
     });
 
+    app.get('/', function(req, res){
+      res.send("hello world");
+    });
+
     app.get('/onepoll/:id', cors(), function(req, res) {
       MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
@@ -58,7 +62,7 @@ module.exports = function(app, passport) {
           res.json({Success: true});
         }
         else {
-          res.json({Success: false})
+          res.json({Success: false});
         }
       })
     });
@@ -68,7 +72,7 @@ module.exports = function(app, passport) {
         if (err) throw err;
         var collection = db.collection('polls');
         collection.update(
-        {_id: ObjectId(req.body.id), "options.optionName": req.body.vote },
+        { _id: ObjectId(req.body.id), "options.optionName": req.body.vote },
         { $inc: { "options.$.value": 1 }});
 
         res.json({Success: true});
@@ -76,7 +80,7 @@ module.exports = function(app, passport) {
       });
     });
 
-    app.put('/api', cors(), function(req, res){
+    app.put('/api', cors(), function(req, res) {
       MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
 

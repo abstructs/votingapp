@@ -6,7 +6,7 @@ var count = 0;
 
 var textStyle = {
   textAlign: "center"
-}
+};
 
 var PollList = React.createClass({
   render: function(){
