@@ -126,6 +126,11 @@ var RenderOptions = React.createClass({
       }
     });
   },
+  handleShare: function(){
+    console.log(this.props.poll.Poll._id)
+    var uri = this.props.poll.Poll.title + " | http://localhost:8080/#/poll/" + this.props.poll.Poll._id.toString();
+    return "https://twitter.com/intent/tweet/?text=" + encodeURIComponent(uri);
+  },
   render: function() {
     if (this.props.poll.Poll !== undefined && this.props.loggedIn === true) {
       return (
@@ -141,6 +146,9 @@ var RenderOptions = React.createClass({
           <CustomOption selected={this.state.customOption} loggedIn={true} />
           <div style={divBtnStyle}>
             <button className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</button>
+          </div>
+          <div style={divBtnStyle}>
+            <a className="btn btn-info" target="_blank" style={btnStyle} href={this.handleShare()}>Share On Twitter</a>
           </div>
           <DeleteBtn userLoggedIn={this.props.userLoggedIn} pollUsername={this.props.poll.Poll.username} handleDelete={this.handleDelete}/>
         </div>
