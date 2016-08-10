@@ -5,7 +5,8 @@ var express = require('express'),
     cors = require('cors'),
     express = require('express'),
     url = 'mongodb://localhost:27017/votingapp',
-    ObjectId = require('mongodb').ObjectID;
+    ObjectId = require('mongodb').ObjectID,
+    path = require('path');
 
 
 module.exports = function(app, passport) {
@@ -20,8 +21,8 @@ module.exports = function(app, passport) {
       });
     });
 
-    app.get('/', function(req, res){
-      res.send("hello world");
+    app.get('*', function(req, res) {
+      res.sendFile(path.resolve(__dirname, '../dist/index.html'));
     });
 
     app.get('/onepoll/:id', cors(), function(req, res) {

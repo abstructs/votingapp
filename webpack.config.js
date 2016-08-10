@@ -11,10 +11,7 @@ module.exports = {
   ],
   output: {
     path: __dirname + '/dist',
-    filename: "index_bundle.js"
-  },
-  node: {
-    fs: "empty"
+    filename: "bundle.js"
   },
   module: {
     loaders: [
