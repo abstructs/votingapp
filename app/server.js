@@ -15,7 +15,16 @@ var MongoClient  = require('mongodb').MongoClient,
     cookieSesh   = require('./config/cookiesesh.js'),
     connect      = require('connect'),
     flash        = require('connect-flash'),
-    http         = require('http');
+    http         = require('http'),
+    webpack      = require('webpack'),
+    webpackConfig = require('../webpack.config'),
+    compiler = webpack(webpackConfig);
+
+app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+}));
+
+app.use(require("webpack-hot-middleware")(compiler));
 
 app.use(function(req, res, next) {
 res.header('Access-Control-Allow-Credentials', true);

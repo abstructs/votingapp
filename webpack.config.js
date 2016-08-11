@@ -1,4 +1,5 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/app/index.html',
   filename: 'index.html',
@@ -7,7 +8,7 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 
 module.exports = {
   entry: [
-    './app/index.js'
+    '/app/index.js'
   ],
   output: {
     path: __dirname + '/dist',
@@ -19,5 +20,13 @@ module.exports = {
       {test: /\.css$/, loader: "style-loader!css-loader" }
     ]
   },
-  plugins: [HTMLWebpackPluginConfig]
+  plugins: [
+    HTMLWebpackPluginConfig,
+    // Webpack 1.0
+    new webpack.optimize.OccurenceOrderPlugin(),
+    // Webpack 2.0 fixed this mispelling
+    // new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ]
 };

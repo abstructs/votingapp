@@ -6,7 +6,7 @@
   "scripts": {
     "production": "webpack -p",
     "start": "webpack-dev-server",
-    "dev": "npm run start & mongod & nodemon app/server.js"
+    "dev": "mongod & nodemon app/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -40,7 +40,8 @@
     "mongodb": "^2.2.2",
     "nodemon": "^1.10.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.12.11",
-    "webpack-dev-server": "^1.14.1"
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.12.2"
   }
 }
