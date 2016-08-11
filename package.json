@@ -6,7 +6,7 @@
   "scripts": {
     "production": "webpack -p",
     "start": "webpack-dev-server",
-    "dev": "mongod & nodemon app/server.js"
+    "dev": "mongod & node app/server.js"
   },
   "author": "",
   "license": "ISC",
