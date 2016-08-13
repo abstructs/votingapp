@@ -27,9 +27,7 @@
     "passport-twitter": "^1.0.4",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
-    "react-router": "^2.5.2"
-  },
-  "devDependencies": {
+    "react-router": "^2.5.2",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-preset-react": "^6.3.13",
