@@ -19,7 +19,8 @@ var hashHistory = require('react-router').hashHistory;
 var isAuth = function() {
   return $.ajax({
     url: 'http://localhost:8000/isauth',
-    xhrFields: {withCredentials: true}
+    xhrFields: {withCredentials: true},
+    cache: false
   });
 };
 
@@ -200,7 +201,6 @@ var LogOut = React.createClass({
 });
 
 var handleLogOut = function(nextState, replace, callback){
-  console.log('call')
   $.ajax({
     url: 'http://localhost:8000/logout',
     xhrFields: {withCredentials: true},

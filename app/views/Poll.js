@@ -37,12 +37,17 @@ var Poll = React.createClass({
     }
   },
   componentDidMount: function() {
-    $.get('http://localhost:8000/onepoll/' + this.props.params, function(res){
+    var getURL = 'http://localhost:8000/onepoll/' + this.props.params
+    $.ajax({
+      url: getURL,
+      cache: false,
+      type: 'GET',
+      success: function(res){
       this.setState({
         pollData: res,
         selection: ""
-      })
-    }.bind(this))
+      })}.bind(this)
+    })
   },
   render: function() {
     if (this.state.pollData.Poll) {
@@ -83,13 +88,12 @@ var RenderOptions = React.createClass({
         id: this.props.pollId,
         vote: optionSelected
       }
-      $.post('http://localhost:8000/addvote/' + this.props.poll.Poll._id, votedFor, function(res){
+      $.post('http://localhost:8000/addvote/' + this.props.poll.Poll._id, votedFor, function(){
         location.reload();
       });
     }
     else if (this.state.customOption === true) {
       var optionSelected = $('#customOption').val();
-      console.log(optionSelected)
       if (optionSelected.length !== 0) {
         var voteAdded = {
           id: this.props.pollId,
@@ -104,7 +108,7 @@ var RenderOptions = React.createClass({
   },
   change: function(e){
     var optionSelected = $('#allOptions option:last-child').val();
-    if (optionSelected === e.target.value) {
+    if (optionSelected === "I'd like a custom option...") {
       this.setState({
         customOption: true
       })
@@ -119,6 +123,7 @@ var RenderOptions = React.createClass({
     var that = this;
     $.ajax({
       url: 'http://localhost:8000/delete/',
+      cache: false,
       data: that.props.poll.Poll,
       type: 'DELETE',
       success: function(res) {
@@ -153,7 +158,7 @@ var RenderOptions = React.createClass({
         </div>
       )
     }
-    else if (this.props.loggedIn === false) {
+    else if (this.props.poll.Poll !== undefined && this.props.loggedIn === false) {
       return (
         <div>
           {this.props.title}

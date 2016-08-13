@@ -21,10 +21,6 @@ module.exports = function(app, passport) {
       });
     });
 
-    app.get('*', function(req, res) {
-      res.sendFile(path.resolve(__dirname, '../dist/index.html'));
-    });
-
     app.get('/onepoll/:id', cors(), function(req, res) {
       MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);

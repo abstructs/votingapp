@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "92dc404ca7dbc3ad215d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2111f43c70ab5c56b236"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -38648,7 +38648,8 @@
 	var isAuth = function () {
 	  return $.ajax({
 	    url: 'http://localhost:8000/isauth',
-	    xhrFields: { withCredentials: true }
+	    xhrFields: { withCredentials: true },
+	    cache: false
 	  });
 	};
 
@@ -38837,7 +38838,6 @@
 	});
 
 	var handleLogOut = function (nextState, replace, callback) {
-	  console.log('call');
 	  $.ajax({
 	    url: 'http://localhost:8000/logout',
 	    xhrFields: { withCredentials: true },
@@ -38975,7 +38975,6 @@
 	      return React.createElement(
 	        'div',
 	        null,
-	        console.log(this.props.loggedIn),
 	        'Loading...'
 	      );
 	    }
@@ -39104,12 +39103,17 @@
 	    };
 	  },
 	  componentDidMount: function () {
-	    $.get('http://localhost:8000/onepoll/' + this.props.params, function (res) {
-	      this.setState({
-	        pollData: res,
-	        selection: ""
-	      });
-	    }.bind(this));
+	    var getURL = 'http://localhost:8000/onepoll/' + this.props.params;
+	    $.ajax({
+	      url: getURL,
+	      cache: false,
+	      success: function (res) {
+	        this.setState({
+	          pollData: res,
+	          selection: ""
+	        });
+	      }.bind(this)
+	    });
 	  },
 	  render: function () {
 	    if (this.state.pollData.Poll) {
@@ -39161,12 +39165,11 @@
 	        id: this.props.pollId,
 	        vote: optionSelected
 	      };
-	      $.post('http://localhost:8000/addvote/' + this.props.poll.Poll._id, votedFor, function (res) {
+	      $.post('http://localhost:8000/addvote/' + this.props.poll.Poll._id, votedFor, function () {
 	        location.reload();
 	      });
 	    } else if (this.state.customOption === true) {
 	      var optionSelected = $('#customOption').val();
-	      console.log(optionSelected);
 	      if (optionSelected.length !== 0) {
 	        var voteAdded = {
 	          id: this.props.pollId,
@@ -39181,7 +39184,7 @@
 	  },
 	  change: function (e) {
 	    var optionSelected = $('#allOptions option:last-child').val();
-	    if (optionSelected === e.target.value) {
+	    if (optionSelected === "I'd like a custom option...") {
 	      this.setState({
 	        customOption: true
 	      });
@@ -39195,6 +39198,7 @@
 	    var that = this;
 	    $.ajax({
 	      url: 'http://localhost:8000/delete/',
+	      cache: false,
 	      data: that.props.poll.Poll,
 	      type: 'DELETE',
 	      success: function (res) {
@@ -39250,7 +39254,7 @@
 	        ),
 	        React.createElement(DeleteBtn, { userLoggedIn: this.props.userLoggedIn, pollUsername: this.props.poll.Poll.username, handleDelete: this.handleDelete })
 	      );
-	    } else if (this.props.loggedIn === false) {
+	    } else if (this.props.poll.Poll !== undefined && this.props.loggedIn === false) {
 	      return React.createElement(
 	        'div',
 	        null,

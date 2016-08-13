@@ -66,7 +66,7 @@ var Home = React.createClass({
     else {
       return (
         <div>
-          {console.log(this.props.loggedIn)}
+
           Loading...
 
         </div>
