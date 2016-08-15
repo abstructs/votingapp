@@ -37,7 +37,7 @@ var Home = React.createClass({
         <div>
           <div className="container">
             <div style={divStyle}>
-              <Link className="btn btn-success" style={btnStyle} to={`/new`}>Create New Poll</Link>
+              <Link className="btn btn-success" style={btnStyle} to={'/new'}>Create New Poll</Link>
               <h1>Voticon!</h1>
               <p className="lead"> Make your vote known... <br></br> Select a poll to from below to view results and vote, or sign-in to make a new poll.</p>
             </div>

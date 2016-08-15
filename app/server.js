@@ -19,7 +19,7 @@ var MongoClient  = require('mongodb').MongoClient,
     webpack = require('webpack'),
     webpackConfig = require('../webpack.config'),
     compiler = webpack(webpackConfig);
-    
+
 // cleanup sessions
 // function sessionCleanup() {
 //     sessionStore.all(function(err, sessions) {
@@ -64,7 +64,7 @@ if ('OPTIONS' == req.method) {
  }
 });
 
-mongoose.connect(process.env.MONGOLAB_URI || configDB.url); // connect to our database
+mongoose.connect(configDB.url); // connect to our database
 
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
