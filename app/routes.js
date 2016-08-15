@@ -4,7 +4,7 @@ var express = require('express'),
     assert = require('assert'),
     cors = require('cors'),
     express = require('express'),
-    url = 'mongodb://localhost:27017/votingapp',
+    url = require('./config/database.js').url,
     ObjectId = require('mongodb').ObjectID,
     path = require('path');
 

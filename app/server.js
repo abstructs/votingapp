@@ -19,32 +19,33 @@ var MongoClient  = require('mongodb').MongoClient,
     webpack = require('webpack'),
     webpackConfig = require('../webpack.config'),
     compiler = webpack(webpackConfig);
+    
 // cleanup sessions
-function sessionCleanup() {
-    sessionStore.all(function(err, sessions) {
-        for (var i = 0; i < sessions.length; i++) {
-            sessionStore.get(sessions[i], function() {} );
-        }
-    });
-}
+// function sessionCleanup() {
+//     sessionStore.all(function(err, sessions) {
+//         for (var i = 0; i < sessions.length; i++) {
+//             sessionStore.get(sessions[i], function() {} );
+//         }
+//     });
+// }
 
-function intervalSession() {
-  var nextDate = new Date();
-  var currDate = new Date();
-  if (nextDate.getMinutes() === 0) { // You can check for seconds here too
-    sessionCleanup()
-  }
-  else {
-    nextDate.setHours(currDate.getHours() + 1);
-    nextDate.setMinutes(0);
-    nextDate.setSeconds(0);
-
-    var difference = nextDate - new Date();
-    setTimeout(sessionCleanup, difference);
-  }
-}
-
-intervalSession();
+// function intervalSession() {
+//   var nextDate = new Date();
+//   var currDate = new Date();
+//   if (nextDate.getMinutes() === 0) { // You can check for seconds here too
+//     sessionCleanup()
+//   }
+//   else {
+//     nextDate.setHours(currDate.getHours() + 1);
+//     nextDate.setMinutes(0);
+//     nextDate.setSeconds(0);
+//
+//     var difference = nextDate - new Date();
+//     setTimeout(sessionCleanup, difference);
+//   }
+// }
+//
+// intervalSession();
 
 app.use(require("webpack-dev-middleware")(compiler, {
     noInfo: true, publicPath: webpackConfig.output.publicPath
@@ -64,7 +65,7 @@ if ('OPTIONS' == req.method) {
 });
 
 mongoose.connect(process.env.MONGOLAB_URI || configDB.url); // connect to our database
-console.log(process.env.MONGOLAB_URI)
+
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({extended: true}));

@@ -1,3 +1,3 @@
 module.exports = {
-  'url' : 'mongodb://localhost:27017/votingapp'
+  'url' : 'mongodb://abstruct:simple123@ds153705.mlab.com:53705/votingapp'
 };
