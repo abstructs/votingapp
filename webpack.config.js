@@ -12,13 +12,14 @@ module.exports = {
     path.resolve(__dirname, 'app/index.js')
   ],
   output: {
-    path: __dirname + '/dist',
+    path: path.resolve('./dist'),
+    publicPath: '/',
     filename: "bundle.js"
   },
   module: {
     loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader", query:{presets:['react']}},
-      {test: /\.css$/, loader: "style-loader!css-loader" }
+      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader", query:{presets:['react']}},
+      { test: /\.css$/, loader: "style-loader!css-loader" }
     ]
   },
   plugins: [

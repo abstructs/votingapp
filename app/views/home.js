@@ -4,6 +4,7 @@ var Navbar = require('./Navbar.js')
 var PollList = require('./PollList.js');
 var $ = require('jQuery');
 require('../style.css');
+
 var divStyle = {
     padding: "40px 15px",
     textAlign: "center"
