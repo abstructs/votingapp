@@ -1,2 +1,4 @@
 node_modules/
 app/config/database.js
+npm-debug.log
+.DS_Store
