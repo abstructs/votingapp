@@ -9,6 +9,7 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 
 module.exports = {
   entry: [
+    'bootstrap-loader', './app',
     path.resolve(__dirname, 'app/index.js')
   ],
   output: {
@@ -18,12 +19,20 @@ module.exports = {
   },
   module: {
     loaders: [
+      {
+        test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+        loader: 'file-loader',
+      },
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader", query:{presets:['react']}},
       { test: /\.css$/, loader: "style-loader!css-loader" }
     ]
   },
   plugins: [
     HTMLWebpackPluginConfig,
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    }),
     // Webpack 1.0
     new webpack.optimize.OccurenceOrderPlugin(),
     // Webpack 2.0 fixed this mispelling
