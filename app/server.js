@@ -90,4 +90,5 @@ app.options('/delete/', cors()); // allow use of .delete for XMLhttpRequests
 require('./routes.js')(app, passport);
 require('./config/passport')(passport);
 
-http.createServer(app).listen(process.env.PORT || 8000);
+// http.createServer(app).listen(process.env.PORT || 8000);
+app.listen(process.env.PORT || 8000)
