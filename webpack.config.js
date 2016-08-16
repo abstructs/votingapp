@@ -10,7 +10,7 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 module.exports = {
   entry: [
     'bootstrap-loader', './app',
-    './app/index.js'
+    path.resolve('./app/index.js')
   ],
   output: {
     path: './dist',
