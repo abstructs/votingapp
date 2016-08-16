@@ -2,6 +2,7 @@ var React = require('react');
 var Navbar = require('./Navbar.js');
 var Chart = require('chart.js');
 var hashHistory = require('react-router').hashHistory;
+var url = require('../config/urls').ServerURL;
 require('../style.css');
 
 var titleStyle = {
@@ -37,7 +38,7 @@ var Poll = React.createClass({
     }
   },
   componentDidMount: function() {
-    var getURL = 'http://localhost:8000/onepoll/' + this.props.params
+    var getURL = url + '/onepoll/' + this.props.params
     $.ajax({
       url: getURL,
       cache: false,

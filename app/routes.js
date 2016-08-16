@@ -6,7 +6,8 @@ var express = require('express'),
     express = require('express'),
     url = require('./config/database.js').url,
     ObjectId = require('mongodb').ObjectID,
-    path = require('path');
+    path = require('path'),
+    serverURL = require('./config/urls').ServerURL;
 
 
 module.exports = function(app, passport) {
@@ -121,14 +122,14 @@ module.exports = function(app, passport) {
     });
 
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : 'http://localhost:8080/#/mypolls', // redirect to the secure profile section
-        failureRedirect : 'http://localhost:8080/#/signup', // redirect back to the signup page if there is an error
+        successRedirect : serverURL + '/#/mypolls', // redirect to the secure profile section
+        failureRedirect : serverURL + '/#/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : 'http://localhost:8080/#/mypolls', // redirect to the secure profile section
-        failureRedirect : 'http://localhost:8080/#/signup', // redirect back to the signup page if there is an error
+        successRedirect : serverURL + '/#/mypolls', // redirect to the secure profile section
+        failureRedirect : serverURL + '/#/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 

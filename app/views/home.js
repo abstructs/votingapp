@@ -3,6 +3,7 @@ var Link = require('react-router').Link;
 var Navbar = require('./Navbar.js')
 var PollList = require('./PollList.js');
 var $ = require('jQuery');
+var url = require('../config/urls').ServerURL;
 require('../style.css');
 
 var divStyle = {
@@ -26,7 +27,7 @@ var Home = React.createClass({
     }
   },
   componentDidMount: function() {
-    $.get('http://localhost:8000/allpolls', function(res){
+    $.get( url + '/allpolls', function(res){
       this.setState({
         pollData: res
       })

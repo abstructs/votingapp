@@ -15,10 +15,11 @@ var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 var Redirect = require('react-router').Redirect;
 var hashHistory = require('react-router').hashHistory;
+var url = require('./config/urls').ServerURL;
 
 var isAuth = function() {
   return $.ajax({
-    url: 'http://localhost:8000/isauth',
+    url: url + '/isauth',
     xhrFields: {withCredentials: true},
     cache: false
   });
@@ -189,7 +190,7 @@ var MyPollsPage = React.createClass({
 
 var LogOut = React.createClass({
   componentDidMount: function(){
-    $.get('http://localhost:8000/logout', function(res){
+    $.get( url + '/logout', function(res){
       hashHistory
     });
   },
@@ -202,7 +203,7 @@ var LogOut = React.createClass({
 
 var handleLogOut = function(nextState, replace, callback){
   $.ajax({
-    url: 'http://localhost:8000/logout',
+    url:  url + '/logout',
     xhrFields: {withCredentials: true},
     type: "GET",
     success: function() {

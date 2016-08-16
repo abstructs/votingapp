@@ -1,6 +1,7 @@
 var React = require('react'),
     $ = require('jquery'),
-    hashHistory = require('react-router').hashHistory;
+    hashHistory = require('react-router').hashHistory,
+    url = require('../../config/urls').ServerURL;
 
 
 var divStyle = {
@@ -25,7 +26,7 @@ var NewPoll = React.createClass({
   componentDidMount: function(){
     var that = this;
     $.ajax({
-      url: 'http://localhost:8000/isauth',
+      url: url + '/isauth',
       xhrFields: {withCredentials: true},
       success: function(res) {
         this.setState({
@@ -65,7 +66,7 @@ var NewPoll = React.createClass({
       options: allOptions
     }
     if (data.title && data.options.length > 1 && data.username.length) {
-      $.post('http://localhost:8000/addpoll', data);
+      $.post( url + '/addpoll', data);
       hashHistory.push('/polls');
     }
   },

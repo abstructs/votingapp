@@ -1,5 +1,5 @@
 var React = require('react');
-
+var url = require('../config/urls').ServerURL;
 var textStyle = {
   textAlign: "center"
 },
@@ -16,7 +16,7 @@ var LogIn = React.createClass({
     return (
       <div className="container">
         <h1 style={divStyle}>Log In</h1>
-        <form action="http://localhost:8000/login" method="post">
+        <form action={url + "/login"} method="post">
           <fieldset className="form-group">
           <label>Email</label>
           <input type="text" className="form-control" name="email"/>

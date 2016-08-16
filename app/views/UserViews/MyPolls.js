@@ -5,6 +5,7 @@ var divStyle = {
     padding: "40px 15px",
     textAlign: "center"
 };
+var url = require('../../config/urls').ServerURL;
 var MyPolls = React.createClass({
   getInitialState: function() {
     return {
@@ -18,7 +19,7 @@ var MyPolls = React.createClass({
   },
   isAuth: function() {
     $.ajax({
-      url: 'http://localhost:8000/isauth',
+      url: url + '/isauth',
       xhrFields: {withCredentials: true},
       success: function(res) {
         this.setState({
@@ -36,7 +37,7 @@ var MyPolls = React.createClass({
   getUserPolls: function(){
     var that = this;
     $.ajax({
-      url: 'http://localhost:8000/mypolls/',
+      url: url + '/mypolls/',
       xhrFields: {withCredentials: true},
       data: {username: that.state.userEmail},
       type: 'POST',

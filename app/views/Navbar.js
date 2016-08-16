@@ -1,7 +1,8 @@
 var React = require('react');
+var url = require('../config/urls').ServerURL;
 var isAuth = function(callback) {
   return $.ajax({
-    url: 'http://localhost:8000/isauth',
+    url: url + '/isauth',
     xhrFields: {withCredentials: true},
     success: function() {
       if (callback) {
