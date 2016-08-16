@@ -4,7 +4,7 @@ var $ = require('jquery');
 require('./style.css');
 
 var Navbar = require('./views/Navbar.js');
-var Home = require('./views/Home.js');
+var Home = require(__dirname + '/views/Home.js');
 var Poll = require('./views/Poll.js');
 var SignUp = require('./views/SignUp.js');
 var NewPoll = require('./views/UserViews/NewPoll.js');

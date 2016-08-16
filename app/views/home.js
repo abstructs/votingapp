@@ -1,6 +1,6 @@
 var React = require('react');
 var Link = require('react-router').Link;
-var Navbar = require('./Navbar.js')
+var Navbar = require('./Navbar.js');
 var PollList = require('./PollList.js');
 var $ = require('jquery');
 var url = require('../config/urls').ServerURL;
