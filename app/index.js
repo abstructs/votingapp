@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var $ = require('jQuery');
+var $ = require('jquery');
 require('./style.css');
 
 var Navbar = require('./views/Navbar.js');

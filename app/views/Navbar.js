@@ -1,5 +1,7 @@
 var React = require('react');
 var url = require('../config/urls').ServerURL;
+var $ = require('jquery');
+
 var isAuth = function(callback) {
   return $.ajax({
     url: url + '/isauth',
