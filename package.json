@@ -6,7 +6,7 @@
   "scripts": {
     "production": "webpack -p",
     "start": "webpack-dev-server",
-    "dev": "node server.js"
+    "dev": "node app/server.js"
   },
   "author": "",
   "license": "ISC",
