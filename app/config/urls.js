@@ -1,3 +1,3 @@
 module.exports = {
-  ServerURL: process.ENV.URL || "http://voticonapp.herokuapp.com/"
+  ServerURL: process.env.URL || "http://voticonapp.herokuapp.com/"
 }
