@@ -150,7 +150,7 @@ var RenderOptions = React.createClass({
           </select>
           <CustomOption selected={this.state.customOption} loggedIn={true} />
           <div style={divBtnStyle}>
-            <button className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</button>
+            <a className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</a>
           </div>
           <div style={divBtnStyle}>
             <a className="btn btn-info" target="_blank" style={btnStyle} href={this.handleShare()}>Share On Twitter</a>
@@ -170,7 +170,7 @@ var RenderOptions = React.createClass({
             })}
           </select>
           <div style={divBtnStyle}>
-            <button className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</button>
+            <a className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</a>
           </div>
         </div>
       )
@@ -217,7 +217,7 @@ var DeleteBtn = React.createClass({
     if (this.props.pollUsername === this.props.userLoggedIn) {
       return (
         <div style={divBtnStyle}>
-          <button className="btn btn-danger" type="submit" onClick={this.props.handleDelete} style={btnStyle}>Delete This Poll...</button>
+          <a className="btn btn-danger" type="submit" onClick={this.props.handleDelete} style={btnStyle}>Delete This Poll...</a>
         </div>
       )
     }
