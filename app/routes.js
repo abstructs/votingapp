@@ -101,9 +101,10 @@ module.exports = function(app, passport) {
         res.send(req.user)
     });
 
-    app.get('/logout', isLoggedIn, function(req, res) {
-      req.session.destroy();
-      res.redirect('/');
+    app.get('/logout', function(req, res) {
+        req.session.destroy(function (err) {
+        res.redirect('/'); 
+      });
     });
 
     app.get('/isauth', isLoggedIn, function(req, res) {
