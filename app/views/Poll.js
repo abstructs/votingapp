@@ -41,7 +41,6 @@ var Poll = React.createClass({
     var getURL = url + '/onepoll/' + this.props.params
     $.ajax({
       url: getURL,
-      cache: false,
       type: 'GET',
       success: function(res){
       this.setState({
@@ -124,7 +123,6 @@ var RenderOptions = React.createClass({
     var that = this;
     $.ajax({
       url: url + '/delete/',
-      cache: false,
       data: that.props.poll.Poll,
       type: 'DELETE',
       success: function(res) {

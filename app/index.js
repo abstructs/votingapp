@@ -20,8 +20,7 @@ var url = require('./config/urls').ServerURL;
 var isAuth = function() {
   return $.ajax({
     url: url + '/isauth',
-    xhrFields: {withCredentials: true},
-    cache: false
+    xhrFields: {withCredentials: true}
   });
 };
 
