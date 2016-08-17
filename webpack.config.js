@@ -13,7 +13,7 @@ module.exports = {
     path.resolve('./app/index.js')
   ],
   output: {
-    path: './dist',
+    path: path.resolve('./dist'),
     publicPath: '/',
     filename: "bundle.js"
   },

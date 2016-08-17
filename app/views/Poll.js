@@ -1,5 +1,5 @@
 var React = require('react');
-var Navbar = require('./Navbar.js');
+var Navbar = require('./navbar');
 var Chart = require('chart.js');
 var hashHistory = require('react-router').hashHistory;
 var url = require('../config/urls').ServerURL;

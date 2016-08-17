@@ -46,7 +46,6 @@ var MongoClient  = require('mongodb').MongoClient,
 // }
 //
 // intervalSession();
-
 app.use(require("webpack-dev-middleware")(compiler, {
     noInfo: true, publicPath: webpackConfig.output.publicPath
 }));

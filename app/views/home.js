@@ -1,7 +1,7 @@
 var React = require('react');
 var Link = require('react-router').Link;
-var Navbar = require('./Navbar.js');
-var PollList = require('./PollList.js');
+var Navbar = require('./navbar');
+var PollList = require('./polllist');
 var $ = require('jquery');
 var url = require('../config/urls').ServerURL;
 require('../style.css');
