@@ -1,6 +1,6 @@
 var React = require('react');
 var $ = require('jquery');
-var PollList = require('../polllist');
+var PollList = require('../PollList.js');
 var divStyle = {
     padding: "40px 15px",
     textAlign: "center"
