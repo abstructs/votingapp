@@ -3,13 +3,13 @@ var ReactDOM = require('react-dom');
 var $ = require('jquery');
 require('./style.css');
 
-var Navbar = require('./views/Navbar');
-var Home = require('./views/Home');
-var Poll = require('./views/Poll');
-var SignUp = require('./views/SignUp');
-var NewPoll = require('./views/UserViews/NewPoll');
-var LogIn = require('./views/LogIn');
-var MyPolls = require('./views/UserViews/MyPolls');
+var Navbar = require('./views/navbar');
+var Home = require('./views/home');
+var Poll = require('./views/poll');
+var SignUp = require('./views/signup');
+var NewPoll = require('./views/UserViews/newpoll');
+var LogIn = require('./views/login');
+var MyPolls = require('./views/UserViews/mypolls');
 
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
