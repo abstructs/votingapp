@@ -7,7 +7,7 @@
     "production": "webpack -p",
     "start": "webpack-dev-server",
     "dev": "node app/server.js",
-    "postinstall": "webpack --config ./webpack-prod.config.js --progress --colors"
+    "postinstall": "webpack --config ./webpack.config.js --progress --colors"
   },
   "author": "",
   "license": "ISC",
