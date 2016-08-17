@@ -1,4 +1,6 @@
-// config/passport.js
+// --->> from scotchio <<---
+
+// may come back to actually use the flash messages
 
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
@@ -14,7 +16,6 @@ module.exports = function(passport) {
     // =========================================================================
     // required for persistent login sessions
     // passport needs ability to serialize and unserialize users out of session
-
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         done(null, user.id);
