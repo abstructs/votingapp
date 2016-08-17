@@ -86,7 +86,6 @@ module.exports = function(app, passport) {
         db.close();
       });
     });
-    
     app.delete('/delete/', cors(), function(req, res) {
       MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
@@ -104,7 +103,7 @@ module.exports = function(app, passport) {
 
     app.get('/logout', isLoggedIn, function(req, res) {
       req.session.destroy();
-      res.send('Success')
+      res.redirect('/');
     });
 
     app.get('/isauth', isLoggedIn, function(req, res) {
@@ -123,16 +122,34 @@ module.exports = function(app, passport) {
     });
 
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '#/mypolls', // redirect to the secure profile section
-        failureRedirect : '#/signup', // redirect back to the signup page if there is an error
+        successRedirect: '/signup', // redirect to the secure profile section
+        failureRedirect: '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '#/mypolls', // redirect to the secure profile section
-        failureRedirect : '#/signup', // redirect back to the signup page if there is an error
+        successRedirect : '/login', // redirect to the secure profile section
+        failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
+
+    app.get('/login', function(req, res){
+      if (req.isAuthenticated()) {
+        res.redirect('/#/mypolls')
+      }
+      else {
+        res.redirect('/#/login')
+      }
+    });
+
+    app.get('/signup', function(req, res){
+      if (req.isAuthenticated()) {
+        res.redirect('/#/mypolls')
+      }
+      else {
+        res.redirect('/#/signup')
+      }
+    });
 
 };
 function isLoggedIn(req, res, next) {
