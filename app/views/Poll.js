@@ -89,7 +89,7 @@ var RenderOptions = React.createClass({
         id: this.props.pollId,
         vote: optionSelected
       }
-      $.post('http://localhost:8000/addvote/' + this.props.poll.Poll._id, votedFor, function(){
+      $.post( url + '/addvote/' + this.props.poll.Poll._id, votedFor, function(){
         location.reload();
       });
     }
@@ -101,7 +101,7 @@ var RenderOptions = React.createClass({
           newOption: optionSelected
         }
 
-        $.post('http://localhost:8000/addoption/' + this.props.poll.Poll._id, voteAdded, function(){
+        $.post( url + '/addoption/' + this.props.poll.Poll._id, voteAdded, function(){
           location.reload();
         });
       }
@@ -123,7 +123,7 @@ var RenderOptions = React.createClass({
   handleDelete: function() {
     var that = this;
     $.ajax({
-      url: 'http://localhost:8000/delete/',
+      url: url + '/delete/',
       cache: false,
       data: that.props.poll.Poll,
       type: 'DELETE',
@@ -133,7 +133,7 @@ var RenderOptions = React.createClass({
     });
   },
   handleShare: function(){
-    var uri = this.props.poll.Poll.title + " | http://localhost:8080/#/poll/" + this.props.poll.Poll._id.toString();
+    var uri = this.props.poll.Poll.title + " | " + url + "/#/poll/" + this.props.poll.Poll._id.toString();
     return "https://twitter.com/intent/tweet/?text=" + encodeURIComponent(uri);
   },
   render: function() {

@@ -86,6 +86,7 @@ module.exports = function(app, passport) {
         db.close();
       });
     });
+    
     app.delete('/delete/', cors(), function(req, res) {
       MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
