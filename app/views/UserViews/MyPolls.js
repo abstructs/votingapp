@@ -66,7 +66,7 @@ var MyPolls = React.createClass({
     }
     else {
       return (
-        <div>404</div>
+        <div>Loading...</div>
       )
     }
   }

@@ -108,7 +108,7 @@ var RenderOptions = React.createClass({
     }
   },
   change: function(e){
-    var optionSelected = $('#allOptions option:last-child').val();
+    var optionSelected = $('#allOptions').find(":selected").text();
     if (optionSelected === "I'd like a custom option...") {
       this.setState({
         customOption: true
