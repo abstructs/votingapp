@@ -59,7 +59,7 @@ var Navbar = React.createClass({
                   <li className={this.props.homeNav || ""}><a href="#">Home</a></li>
                   <li className={this.props.pollNav || ""}><a href="#polls">Polls</a></li>
                   <li className={this.props.myPollsNav || ""}><a href="#mypolls">My Polls</a></li>
-                  <li className={""}><a href="#logout">Log Out</a></li>
+                  <li className={""}><a href="/logout">Log Out</a></li>
                 </ul>
               </div>
             </div>
