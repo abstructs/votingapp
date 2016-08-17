@@ -137,7 +137,7 @@ var RenderOptions = React.createClass({
   render: function() {
     if (this.props.poll.Poll !== undefined && this.props.loggedIn === true) {
       return (
-        <div>
+        <span>
           {this.props.title}
           <p>I would like to vote...</p>
           <select className="form-control" id="allOptions" style={selectStyle} onChange={this.change}>
@@ -154,12 +154,12 @@ var RenderOptions = React.createClass({
             <a className="btn btn-info" target="_blank" style={btnStyle} href={this.handleShare()}>Share On Twitter</a>
           </div>
           <DeleteBtn userLoggedIn={this.props.userLoggedIn} pollUsername={this.props.poll.Poll.username} handleDelete={this.handleDelete}/>
-        </div>
+        </span>
       )
     }
     else if (this.props.poll.Poll !== undefined && this.props.loggedIn === false) {
       return (
-        <div>
+        <span>
           {this.props.title}
           <p>I would like to vote...</p>
           <select className="form-control" id="allOptions" style={selectStyle} onChange={this.change}>
@@ -170,7 +170,7 @@ var RenderOptions = React.createClass({
           <div style={divBtnStyle}>
             <a className="btn btn-success" type="submit" onClick={this.handleSubmit} style={btnStyle}>Submit</a>
           </div>
-        </div>
+        </span>
       )
     }
     else {
